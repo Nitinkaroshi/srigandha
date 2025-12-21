@@ -47,57 +47,48 @@ function App() {
             pauseOnHover
           />
           <Routes>
-          {isAdminDomain ? (
-            <>
-              <Route path="/login" element={<Login />} />
-              <Route path="/forgot-password" element={<ForgotPassword />} />
-              <Route path="/reset-password" element={<ResetPassword />} />
-              <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-              <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-              <Route path="/pages" element={<ProtectedRoute><ManagePages /></ProtectedRoute>} />
-              <Route path="/carousel" element={<ProtectedRoute><ManageCarousel /></ProtectedRoute>} />
-              <Route path="/events" element={<ProtectedRoute><ManageEvents /></ProtectedRoute>} />
-              <Route path="/committee" element={<ProtectedRoute><ManageCommittee /></ProtectedRoute>} />
-              <Route path="/gallery" element={<ProtectedRoute><ManageGallery /></ProtectedRoute>} />
-              <Route path="/contact" element={<ProtectedRoute><ManageContact /></ProtectedRoute>} />
-              <Route path="/settings" element={<ProtectedRoute><ManageSettings /></ProtectedRoute>} />
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </>
-          ) : (
-            <>
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/events" element={<Events />} />
-              <Route path="/committee" element={<Committee />} />
-              <Route path="/gallery" element={<Gallery />} />
-              <Route path="/contact" element={<Contact />} />
+            {isAdminDomain ? (
+              <>
+                <Route path="/login" element={<Login />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
+                <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+                <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+                <Route path="/pages" element={<ProtectedRoute><ManagePages /></ProtectedRoute>} />
+                <Route path="/carousel" element={<ProtectedRoute><ManageCarousel /></ProtectedRoute>} />
+                <Route path="/events" element={<ProtectedRoute><ManageEvents /></ProtectedRoute>} />
+                <Route path="/committee" element={<ProtectedRoute><ManageCommittee /></ProtectedRoute>} />
+                <Route path="/gallery" element={<ProtectedRoute><ManageGallery /></ProtectedRoute>} />
+                <Route path="/contact" element={<ProtectedRoute><ManageContact /></ProtectedRoute>} />
+                <Route path="/settings" element={<ProtectedRoute><ManageSettings /></ProtectedRoute>} />
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </>
+            ) : (
+              <>
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/events" element={<Events />} />
+                <Route path="/committee" element={<Committee />} />
+                <Route path="/gallery" element={<Gallery />} />
+                <Route path="/contact" element={<Contact />} />
 
-              {/* Admin routes accessible via /admin path */}
-              <Route path="/admin/login" element={<Login />} />
-              <Route path="/forgot-password" element={<ForgotPassword />} />
-              <Route path="/reset-password" element={<ResetPassword />} />
-              <Route path="/admin" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-              <Route path="/admin/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-              <Route path="/admin/pages" element={<ProtectedRoute><ManagePages /></ProtectedRoute>} />
-              <Route path="/admin/carousel" element={<ProtectedRoute><ManageCarousel /></ProtectedRoute>} />
-              <Route path="/admin/events" element={<ProtectedRoute><ManageEvents /></ProtectedRoute>} />
-              <Route path="/admin/committee" element={<ProtectedRoute><ManageCommittee /></ProtectedRoute>} />
-              <Route path="/admin/gallery" element={<ProtectedRoute><ManageGallery /></ProtectedRoute>} />
-              <Route path="/admin/contact" element={<ProtectedRoute><ManageContact /></ProtectedRoute>} />
-              <Route path="/admin/settings" element={<ProtectedRoute><ManageSettings /></ProtectedRoute>} />
+                {/* Admin routes accessible via /admin path */}
+                <Route path="/admin/login" element={<Login />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
+                <Route path="/admin" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+                <Route path="/admin/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+                <Route path="/admin/pages" element={<ProtectedRoute><ManagePages /></ProtectedRoute>} />
+                <Route path="/admin/carousel" element={<ProtectedRoute><ManageCarousel /></ProtectedRoute>} />
+                <Route path="/admin/events" element={<ProtectedRoute><ManageEvents /></ProtectedRoute>} />
+                <Route path="/admin/committee" element={<ProtectedRoute><ManageCommittee /></ProtectedRoute>} />
+                <Route path="/admin/gallery" element={<ProtectedRoute><ManageGallery /></ProtectedRoute>} />
+                <Route path="/admin/contact" element={<ProtectedRoute><ManageContact /></ProtectedRoute>} />
+                <Route path="/admin/settings" element={<ProtectedRoute><ManageSettings /></ProtectedRoute>} />
 
-              <Route path="*" element={
-                <div style={{ padding: '2rem', textAlign: 'center' }}>
-                  <h1 className="text-2xl font-bold">404 - Page Not Found</h1>
-                  <p>Attempted Path: {window.location.pathname}</p>
-                  <p className="text-sm text-gray-500 mt-2">
-                    If you are trying to access the admin login, please check the URL.
-                  </p>
-                  <a href="/" className="text-primary hover:underline mt-4 block">Return to Home</a>
-                </div>
-              } />
-            </>
-          )}
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </>
+            )}
           </Routes>
         </Router>
       </AuthProvider>
