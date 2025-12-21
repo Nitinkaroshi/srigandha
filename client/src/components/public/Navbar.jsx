@@ -89,7 +89,7 @@ const Navbar = () => {
       {/* Navigation Menu - Desktop */}
       <div className="hidden md:block bg-green-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-12">
+          <div className="flex items-center justify-between py-2 min-h-[3rem]">
             <div className="flex space-x-1">
               <Link
                 to="/"
@@ -129,7 +129,7 @@ const Navbar = () => {
               </Link>
             </div>
             <a
-              href={settings?.membershipPortalUrl || 'https://srigandhafl.mygumpu.com/public/home'}
+              href="https://app.featsclub.com/membership.html?ps7Pa4IiKXQHQlCusbXFUTMLBH03"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded font-bold transition flex items-center space-x-2"
@@ -137,7 +137,7 @@ const Navbar = () => {
               <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
               </svg>
-              <span>LOGIN</span>
+              <span>LOGIN / MEMBERSHIP</span>
             </a>
           </div>
         </div>
@@ -190,12 +190,12 @@ const Navbar = () => {
               CONTACT US
             </Link>
             <a
-              href={settings?.membershipPortalUrl || 'https://srigandhafl.mygumpu.com/public/home'}
+              href="https://app.featsclub.com/membership.html?ps7Pa4IiKXQHQlCusbXFUTMLBH03"
               target="_blank"
               rel="noopener noreferrer"
               className="block px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md text-center font-bold"
             >
-              LOGIN
+              LOGIN / MEMBERSHIP
             </a>
           </div>
         </div>

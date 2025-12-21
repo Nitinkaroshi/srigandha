@@ -35,12 +35,24 @@ const Events = () => {
 
       <main className="flex-grow py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-center mb-8">
+            <a
+              href="https://app.featsclub.com/event-ticket.html?ps7Pa4IiKXQHQlCusbXFUTMLBH03/PZhnH4QeWTmFLRlIOp3V"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-red-600 hover:bg-red-700 text-white text-lg font-bold px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition transform hover:-translate-y-1 flex items-center space-x-3 animate-bounce"
+            >
+              <span>🎟️</span>
+              <span>Register Now for Upcoming Event</span>
+            </a>
+          </div>
+
           <div className="flex justify-center flex-wrap gap-4 mb-12">
             <button
               onClick={() => setActiveTab('upcoming')}
               className={`px-6 py-3 rounded-md font-semibold transition ${activeTab === 'upcoming'
-                  ? 'bg-primary text-white'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                ? 'bg-primary text-white'
+                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                 }`}
             >
               Upcoming Events
@@ -48,8 +60,8 @@ const Events = () => {
             <button
               onClick={() => setActiveTab('past')}
               className={`px-6 py-3 rounded-md font-semibold transition ${activeTab === 'past'
-                  ? 'bg-primary text-white'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                ? 'bg-primary text-white'
+                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                 }`}
             >
               Past Events
