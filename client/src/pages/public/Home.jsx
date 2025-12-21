@@ -109,11 +109,6 @@ const Home = () => {
   // Render default home page content as fallback
   const renderDefaultContent = () => (
     <>
-      {/* Carousel Section */}
-      <section className="w-full">
-        <Carousel images={getCarouselImages()} autoPlayInterval={5000} />
-      </section>
-
       {/* Featured Images Section */}
       <section className="py-12 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
