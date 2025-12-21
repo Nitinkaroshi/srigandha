@@ -1,5 +1,55 @@
+# Dependencies
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Environment variables
 .env
-node_modules
+.env.local
+.env.development
+.env.production
+client/.env
+client/.env.local
+server/.env
+server/.env.local
+
+# Build outputs
+client/dist/
+client/build/
+server/build/
+dist/
+build/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs/
+
+# OS files
 .DS_Store
-dist
-coverage
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Uploads (keep structure but ignore uploaded files)
+server/uploads/*
+!server/uploads/.gitkeep
+!server/uploads/carousel/.gitkeep
+!server/uploads/events/.gitkeep
+!server/uploads/gallery/.gitkeep
+!server/uploads/committee/.gitkeep
+!server/uploads/general/.gitkeep
+
+# Testing
+coverage/
+.nyc_output/
+
+# Misc
+*.pem
+.cache
