@@ -86,7 +86,16 @@ function App() {
               <Route path="/admin/contact" element={<ProtectedRoute><ManageContact /></ProtectedRoute>} />
               <Route path="/admin/settings" element={<ProtectedRoute><ManageSettings /></ProtectedRoute>} />
 
-              <Route path="*" element={<Navigate to="/" replace />} />
+              <Route path="*" element={
+                <div style={{ padding: '2rem', textAlign: 'center' }}>
+                  <h1 className="text-2xl font-bold">404 - Page Not Found</h1>
+                  <p>Attempted Path: {window.location.pathname}</p>
+                  <p className="text-sm text-gray-500 mt-2">
+                    If you are trying to access the admin login, please check the URL.
+                  </p>
+                  <a href="/" className="text-primary hover:underline mt-4 block">Return to Home</a>
+                </div>
+              } />
             </>
           )}
           </Routes>
