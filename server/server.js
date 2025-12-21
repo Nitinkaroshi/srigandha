@@ -5,6 +5,7 @@ import connectDB from './config/db.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
+import { sendErrorAlert, sendServerRestartAlert, sendCriticalAlert } from './utils/errorMonitor.js';
 
 import authRoutes from './routes/auth.js';
 import pageRoutes from './routes/pages.js';
@@ -57,13 +58,69 @@ app.get('/api', (req, res) => {
   res.json({ message: 'API is running', version: '1.0.0' });
 });
 
+// Global error handler middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
+
+  // Send error alert email in production
+  if (process.env.NODE_ENV === 'production') {
+    sendErrorAlert(err, {
+      endpoint: req.originalUrl,
+      method: req.method,
+      userId: req.user?.id
+    }).catch(console.error);
+  }
+
   res.status(500).json({ message: 'Something went wrong!' });
 });
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+
+  // Send restart notification on server start (only in production)
+  if (process.env.NODE_ENV === 'production') {
+    sendServerRestartAlert().catch(console.error);
+  }
+});
+
+// Handle unhandled promise rejections
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+
+  if (process.env.NODE_ENV === 'production') {
+    sendCriticalAlert(
+      'Unhandled Promise Rejection',
+      'An unhandled promise rejection occurred in the server.',
+      { reason: reason.toString() }
+    ).catch(console.error);
+  }
+});
+
+// Handle uncaught exceptions
+process.on('uncaughtException', (error) => {
+  console.error('Uncaught Exception:', error);
+
+  if (process.env.NODE_ENV === 'production') {
+    sendCriticalAlert(
+      'Uncaught Exception',
+      'A critical uncaught exception occurred. Server will restart.',
+      { error: error.message, stack: error.stack }
+    ).catch(console.error);
+  }
+
+  // Give time for alert to be sent before exiting
+  setTimeout(() => {
+    process.exit(1);
+  }, 2000);
+});
+
+// Graceful shutdown
+process.on('SIGTERM', () => {
+  console.log('SIGTERM signal received: closing HTTP server');
+  server.close(() => {
+    console.log('HTTP server closed');
+    process.exit(0);
+  });
 });
