@@ -121,7 +121,7 @@ const Home = () => {
               <img
                 src="/gallery-1.png"
                 alt="Cultural Event"
-                className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500"
+                className="w-full h-64 md:h-80 object-cover group-hover:scale-110 transition-transform duration-500"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <div className="absolute bottom-0 left-0 right-0 p-6">
@@ -138,7 +138,7 @@ const Home = () => {
               <img
                 src="/gallery-2.png"
                 alt="Community Gathering"
-                className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500"
+                className="w-full h-64 md:h-80 object-cover group-hover:scale-110 transition-transform duration-500"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <div className="absolute bottom-0 left-0 right-0 p-6">
@@ -155,7 +155,7 @@ const Home = () => {
               <img
                 src="/gallery-3.png"
                 alt="Festival Celebration"
-                className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500"
+                className="w-full h-64 md:h-80 object-cover group-hover:scale-110 transition-transform duration-500"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <div className="absolute bottom-0 left-0 right-0 p-6">
@@ -215,9 +215,8 @@ const Home = () => {
               {settings.membershipPlans.map((plan, index) => (
                 <div
                   key={index}
-                  className={`bg-white rounded-lg shadow-md p-8 text-center ${
-                    plan.popular ? 'border-4 border-primary' : ''
-                  }`}
+                  className={`bg-white rounded-lg shadow-md p-8 text-center ${plan.popular ? 'border-4 border-primary' : ''
+                    }`}
                 >
                   {plan.popular && (
                     <div className="bg-primary text-white text-sm px-3 py-1 rounded-full inline-block mb-4">

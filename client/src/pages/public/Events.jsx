@@ -30,29 +30,27 @@ const Events = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      
+
       <Hero title="Events" subtitle="Join us in celebrating our culture" />
 
       <main className="flex-grow py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-center space-x-4 mb-12">
+          <div className="flex justify-center flex-wrap gap-4 mb-12">
             <button
               onClick={() => setActiveTab('upcoming')}
-              className={`px-6 py-3 rounded-md font-semibold transition ${
-                activeTab === 'upcoming'
+              className={`px-6 py-3 rounded-md font-semibold transition ${activeTab === 'upcoming'
                   ? 'bg-primary text-white'
                   : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-              }`}
+                }`}
             >
               Upcoming Events
             </button>
             <button
               onClick={() => setActiveTab('past')}
-              className={`px-6 py-3 rounded-md font-semibold transition ${
-                activeTab === 'past'
+              className={`px-6 py-3 rounded-md font-semibold transition ${activeTab === 'past'
                   ? 'bg-primary text-white'
                   : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-              }`}
+                }`}
             >
               Past Events
             </button>

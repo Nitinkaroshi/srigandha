@@ -36,15 +36,14 @@ const Carousel = ({ images, autoPlayInterval = 5000 }) => {
   }
 
   return (
-    <div className="relative w-full h-[600px] overflow-hidden rounded-lg shadow-xl bg-gray-100">
+    <div className="relative w-full h-[250px] sm:h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden rounded-lg shadow-xl bg-gray-100">
       {/* Images */}
       <div className="relative h-full">
         {images.map((image, index) => (
           <div
             key={index}
-            className={`absolute inset-0 transition-opacity duration-1000 ${
-              index === currentIndex ? 'opacity-100' : 'opacity-0'
-            }`}
+            className={`absolute inset-0 transition-opacity duration-1000 ${index === currentIndex ? 'opacity-100' : 'opacity-0'
+              }`}
           >
             <img
               src={image.src}
@@ -110,11 +109,10 @@ const Carousel = ({ images, autoPlayInterval = 5000 }) => {
           <button
             key={index}
             onClick={() => goToSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              index === currentIndex
+            className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentIndex
                 ? 'bg-white w-8'
                 : 'bg-white/50 hover:bg-white/75'
-            }`}
+              }`}
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}

@@ -55,24 +55,22 @@ const Committee = () => {
       <main className="flex-grow py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Tab Navigation */}
-          <div className="flex justify-center space-x-4 mb-12">
+          <div className="flex justify-center flex-wrap gap-4 mb-12">
             <button
               onClick={() => setActiveTab('current')}
-              className={`px-6 py-3 rounded-md font-semibold transition ${
-                activeTab === 'current'
+              className={`px-6 py-3 rounded-md font-semibold transition ${activeTab === 'current'
                   ? 'bg-[#fecc01] text-gray-900'
                   : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-              }`}
+                }`}
             >
               Board of Trustees
             </button>
             <button
               onClick={() => setActiveTab('previous')}
-              className={`px-6 py-3 rounded-md font-semibold transition ${
-                activeTab === 'previous'
+              className={`px-6 py-3 rounded-md font-semibold transition ${activeTab === 'previous'
                   ? 'bg-[#fecc01] text-gray-900'
                   : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-              }`}
+                }`}
             >
               Previous Committees
             </button>
