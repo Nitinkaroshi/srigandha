@@ -25,13 +25,31 @@ const siteSettingsSchema = new mongoose.Schema({
   }],
   membershipPortalUrl: {
     type: String,
-    default: 'https://srigandhafl.mygumpu.com/public/home'
+    default: ''
+  },
+  whatsappLink: {
+    type: String,
+    default: ''
   },
   contactInfo: {
     email: String,
     phone: String,
     address: String
-  }
+  },
+  presidentMessage: {
+    name: String,
+    title: { type: String, default: 'President' },
+    photo: String,
+    message: String,
+    messageKannada: String
+  },
+  sponsors: [{
+    name: { type: String, required: true },
+    logo: String,
+    url: String,
+    order: { type: Number, default: 0 },
+    isActive: { type: Boolean, default: true }
+  }]
 }, {
   timestamps: true
 });

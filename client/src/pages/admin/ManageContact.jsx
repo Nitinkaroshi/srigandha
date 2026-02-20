@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react';
 import Sidebar from '../../components/admin/Sidebar';
 import ConfirmModal from '../../components/common/ConfirmModal';
 import { contactAPI } from '../../utils/api';
-import { toast } from 'react-toastify';
+import { toast } from 'sonner';
 
 const ManageContact = () => {
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [messageToDelete, setMessageToDelete] = useState(null);
+    const [expandedMessage, setExpandedMessage] = useState(null);
 
     useEffect(() => {
         fetchMessages();
@@ -22,6 +23,18 @@ const ManageContact = () => {
             console.error('Error fetching messages:', error);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleToggleRead = async (id) => {
+        try {
+            const response = await contactAPI.toggleRead(id);
+            setMessages(messages.map((msg) =>
+                msg._id === id ? { ...msg, read: response.data.read } : msg
+            ));
+        } catch (error) {
+            console.error('Error toggling read status:', error);
+            toast.error('Failed to update message status');
         }
     };
 
@@ -44,11 +57,20 @@ const ManageContact = () => {
         }
     };
 
+    const unreadCount = messages.filter((msg) => !msg.read).length;
+
     return (
         <div className="flex bg-gray-100 min-h-screen">
             <Sidebar />
             <div className="flex-1 p-8 overflow-y-auto">
-                <h1 className="text-3xl font-bold mb-8 text-gray-800">Contact Messages</h1>
+                <div className="flex justify-between items-center mb-8">
+                    <div>
+                        <h1 className="text-3xl font-bold text-gray-800">Contact Messages</h1>
+                        {unreadCount > 0 && (
+                            <p className="text-sm text-gray-500 mt-1">{unreadCount} unread message{unreadCount !== 1 ? 's' : ''}</p>
+                        )}
+                    </div>
+                </div>
 
                 {loading ? (
                     <div>Loading...</div>
@@ -58,6 +80,9 @@ const ManageContact = () => {
                             <table className="min-w-full divide-y divide-gray-200">
                                 <thead className="bg-gray-50">
                                     <tr>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Status
+                                        </th>
                                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Date
                                         </th>
@@ -78,29 +103,50 @@ const ManageContact = () => {
                                 <tbody className="bg-white divide-y divide-gray-200">
                                     {messages.length === 0 ? (
                                         <tr>
-                                            <td colSpan="5" className="px-6 py-4 text-center text-gray-500">
+                                            <td colSpan="6" className="px-6 py-4 text-center text-gray-500">
                                                 No messages found
                                             </td>
                                         </tr>
                                     ) : (
                                         messages.map((msg) => (
-                                            <tr key={msg._id} className="hover:bg-gray-50">
+                                            <tr
+                                                key={msg._id}
+                                                className={`hover:bg-gray-50 cursor-pointer ${!msg.read ? 'bg-blue-50' : ''}`}
+                                                onClick={() => setExpandedMessage(expandedMessage === msg._id ? null : msg._id)}
+                                            >
+                                                <td className="px-6 py-4 whitespace-nowrap">
+                                                    <button
+                                                        onClick={(e) => { e.stopPropagation(); handleToggleRead(msg._id); }}
+                                                        className={`w-3 h-3 rounded-full ${msg.read ? 'bg-gray-300' : 'bg-blue-500'}`}
+                                                        title={msg.read ? 'Mark as unread' : 'Mark as read'}
+                                                    />
+                                                </td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                     {new Date(msg.createdAt).toLocaleDateString()}
                                                 </td>
                                                 <td className="px-6 py-4 whitespace-nowrap">
-                                                    <div className="text-sm font-medium text-gray-900">{msg.name}</div>
+                                                    <div className={`text-sm ${!msg.read ? 'font-bold text-gray-900' : 'font-medium text-gray-900'}`}>{msg.name}</div>
                                                     <div className="text-sm text-gray-500">{msg.email}</div>
                                                 </td>
-                                                <td className="px-6 py-4 text-sm text-gray-500">
+                                                <td className={`px-6 py-4 text-sm ${!msg.read ? 'font-semibold text-gray-800' : 'text-gray-500'}`}>
                                                     {msg.subject}
                                                 </td>
-                                                <td className="px-6 py-4 text-sm text-gray-500 max-w-xs truncate">
-                                                    {msg.message}
+                                                <td className="px-6 py-4 text-sm text-gray-500 max-w-xs">
+                                                    {expandedMessage === msg._id ? (
+                                                        <div className="whitespace-pre-wrap">{msg.message}</div>
+                                                    ) : (
+                                                        <div className="truncate">{msg.message}</div>
+                                                    )}
                                                 </td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                                     <button
-                                                        onClick={() => handleDeleteClick(msg._id)}
+                                                        onClick={(e) => { e.stopPropagation(); handleToggleRead(msg._id); }}
+                                                        className="text-blue-600 hover:text-blue-900 mr-3"
+                                                    >
+                                                        {msg.read ? 'Unread' : 'Read'}
+                                                    </button>
+                                                    <button
+                                                        onClick={(e) => { e.stopPropagation(); handleDeleteClick(msg._id); }}
                                                         className="text-red-600 hover:text-red-900"
                                                     >
                                                         Delete

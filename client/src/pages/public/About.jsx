@@ -29,13 +29,14 @@ const About = () => {
     }
   };
 
-  // Fallback content if page not found in database
   const renderFallbackContent = () => (
     <>
       <Hero title="About Us" subtitle="Srigandha Kannada Koota of Florida" />
 
       <main className="flex-grow py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+          {/* Intro with Logo */}
           <div className="flex flex-col md:flex-row items-center justify-center mb-16">
             <img
               src={logo}
@@ -43,268 +44,188 @@ const About = () => {
               className="w-48 md:w-64 h-auto mb-8 md:mb-0 md:mr-12 animate-fade-in"
             />
             <div className="prose prose-lg max-w-none">
-              <h2 className="text-3xl font-bold mb-4 text-primary">Our Story</h2>
+              <h2 className="text-3xl font-bold mb-4 text-primary">Srigandha Kannada Koota</h2>
+              <p
+                className="text-xl text-primary font-semibold mb-4 italic"
+                style={{ fontFamily: "'Noto Sans Kannada', serif" }}
+              >
+                "&#x0C95;&#x0CA8;&#x0CCD;&#x0CA8;&#x0CA1;&#x0CBF;&#x0C97;&#x0CB0;&#x0CC1; &#x0C92;&#x0C82;&#x0CA6;&#x0CBE;&#x0CA6;&#x0CBE;&#x0C97; &#x0C8E;&#x0CB2;&#x0CCD;&#x0CB2;&#x0CC6;&#x0CA1;&#x0CC6; &#x0C95;&#x0CB0;&#x0CCD;&#x0CA8;&#x0CBE;&#x0C9F;&#x0C95;&#x0CB5;&#x0CC7;"
+              </p>
+              <p className="text-gray-600 italic mb-4">
+                When Kannadigas unite, the spirit of Karnataka lives wherever they stand.
+              </p>
               <p className="text-gray-700 leading-relaxed text-lg">
-                In the year 1992, a small group of Kannadigas in Florida had a big aspiration.
-                Their goal was to unite all the Kannadigas of Florida and promote the rich culture of Karnataka.
-                The main intent was to pass on the tradition of Karnataka to the next generation growing up in America,
-                and to instill in them, an awareness of their roots. They named this organization “ಶ್ರೀಗಂಧ” (Srigandha)
-                in honor of the fragrant Sandalwood tree of Karnataka.
+                Srigandha Kannada Koota of Florida is a <strong>beacon of Kannada identity, culture, and community</strong> &mdash; a non-profit organization dedicated to preserving, nurturing, and celebrating the <strong>language, traditions, and values of Karnataka</strong> among Kannadigas living in Florida and beyond.
+              </p>
+              <p className="text-gray-700 leading-relaxed text-lg mt-4">
+                Founded in <strong>1992</strong>, Srigandha was born from a powerful realization shared by a small group of visionaries: that distance from the homeland should never mean distance from one&rsquo;s roots, that language must be spoken to survive, and that culture must be lived to endure.
+              </p>
+              <p className="text-gray-700 leading-relaxed text-lg mt-4">
+                The organization was named <strong>&ldquo;&#x0CB6;&#x0CCD;&#x0CB0;&#x0CC0;&#x0C97;&#x0C82;&#x0CA7; (Srigandha)&rdquo;</strong>, after the sacred sandalwood tree of Karnataka &mdash; renowned for its fragrance, strength, and longevity. Just like sandalwood, Srigandha represents a heritage that grows quietly yet leaves a lasting presence, enriching everything around it.
               </p>
             </div>
           </div>
 
+          {/* Our Origins */}
           <div className="mb-16">
-            <h2 className="text-3xl font-bold mb-8 text-center text-gray-800">Our Journey Through History</h2>
-            <div className="relative border-l-4 border-primary ml-6 md:ml-12 space-y-12">
-
-              {/* November 1992 */}
-              <div className="relative pl-8 md:pl-12">
-                <div className="absolute -left-3 bg-white border-4 border-primary rounded-full w-6 h-6 mt-1.5"></div>
-                <h3 className="text-2xl font-bold text-gray-800 mb-2">November 1992 – The Beginning (Orlando)</h3>
-                <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
-                  <ul className="list-disc ml-5 text-gray-700 space-y-2">
-                    <li>Held at Radisson Inn, Orlando.</li>
-                    <li>Cultural program presented by local talent of all ages.</li>
-                    <li>Women’s session and Youth session.</li>
-                    <li>Authentic and tasty Karnataka food.</li>
-                    <li>An evening with music and dance lead by a DJ.</li>
-                  </ul>
-                  <div className="mt-4 bg-yellow-50 p-4 rounded-md">
-                    <h4 className="font-semibold text-primary mb-2">Founding Leadership</h4>
-                    <p className="text-sm text-gray-700">
-                      Renuka Ramappa (First President), Nalini Mruthyunjaya, Viju Prakash, Indira Sastry, Gopal Hegde,
-                      Revathi Iyengar, Leela Vaidya, Vasundhara Iyengar, Mangala Kumar, Kala Seshadri, Ponamma Vasudev,
-                      Jyothi Srinath, Shobha Shastry, Sandhya Srinivasan, Keshava Babu, and K.V. Sundaresh.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* May 1994 */}
-              <div className="relative pl-8 md:pl-12">
-                <div className="absolute -left-3 bg-white border-4 border-primary rounded-full w-6 h-6 mt-1.5"></div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2">May 1994 – Orlando</h3>
-                <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
-                  <p className="text-gray-700 mb-2">Radisson Inn, Orlando.</p>
-                  <ul className="list-disc ml-5 text-gray-700 space-y-1">
-                    <li>Cultural activities and sumptuous food.</li>
-                    <li><strong>Sri Sant Keshava Das</strong>, an iconic Harikatha Daasaru from Bangalore addressed the gathering.</li>
-                  </ul>
-                </div>
-              </div>
-
-              {/* November 1995 */}
-              <div className="relative pl-8 md:pl-12">
-                <div className="absolute -left-3 bg-white border-4 border-primary rounded-full w-6 h-6 mt-1.5"></div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2">November 1995 – West Palm Beach</h3>
-                <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
-                  <p className="text-gray-700">
-                    The children of prior years, now in their teens, participated enthusiastically in many activities.
-                    The fundamental desire of the adults seemed to be achieving its goal.
-                  </p>
-                </div>
-              </div>
-
-              {/* May 1997 */}
-              <div className="relative pl-8 md:pl-12">
-                <div className="absolute -left-3 bg-white border-4 border-primary rounded-full w-6 h-6 mt-1.5"></div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2">May 1997 – Tampa</h3>
-                <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
-                  <p className="text-gray-700 mb-2">India Cultural Center, Tampa.</p>
-                  <ul className="list-disc ml-5 text-gray-700 space-y-1">
-                    <li>Cultural show and indoor games.</li>
-                    <li>Youth sessions, group meetings and talks on health awareness by volunteer health specialists.</li>
-                  </ul>
-                </div>
-              </div>
-
-              {/* November 1998 */}
-              <div className="relative pl-8 md:pl-12">
-                <div className="absolute -left-3 bg-white border-4 border-primary rounded-full w-6 h-6 mt-1.5"></div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2">November 1998 – Orlando</h3>
-                <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
-                  <p className="text-gray-700 mb-2">It was a two-day get together.</p>
-                  <ul className="list-disc ml-5 text-gray-700 space-y-1">
-                    <li><strong>Manjula Gururaj</strong> and party performed with their orchestra.</li>
-                    <li><strong>Yashawant Sardeshpande</strong> and troop performed a hilarious drama “All the best”.</li>
-                    <li>Mimicry by Dayanand and Kannada Bhavagethae by Puttur Narasimha Nayak.</li>
-                  </ul>
-                  <p className="mt-2 text-primary font-medium">Nijakku Habba!</p>
-                </div>
-              </div>
-
-              {/* September 2000 */}
-              <div className="relative pl-8 md:pl-12">
-                <div className="absolute -left-3 bg-white border-4 border-primary rounded-full w-6 h-6 mt-1.5"></div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2">September 2000 – Tampa</h3>
-                <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
-                  <p className="text-gray-700 mb-2">Hindu Temple Hall, Tampa.</p>
-                  <ul className="list-disc ml-5 text-gray-700 space-y-1">
-                    <li><strong>Yakshagana:</strong> Performed by artists from Karnataka.</li>
-                    <li><strong>Kavya Chitra:</strong> Fusion of poetry and art. As the poet composed his poetry on the spot, the artist painted the picture. Paintings were sold to the highest bidder.</li>
-                  </ul>
-                </div>
-              </div>
-
-              {/* April 2002 */}
-              <div className="relative pl-8 md:pl-12">
-                <div className="absolute -left-3 bg-white border-4 border-primary rounded-full w-6 h-6 mt-1.5"></div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2">April 2002 – Fort Lauderdale</h3>
-                <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
-                  <p className="text-gray-700 mb-2">Marriott Hotel.</p>
-                  <ul className="list-disc ml-5 text-gray-700 space-y-1">
-                    <li>Cultural program in the Shiva Vishnu temple.</li>
-                    <li>Evening cruise on the Atlantic.</li>
-                    <li>Outdoor Masala Dosa party in a park the next day.</li>
-                  </ul>
-                </div>
-              </div>
-
-              {/* September 2004 */}
-              <div className="relative pl-8 md:pl-12">
-                <div className="absolute -left-3 bg-white border-4 border-primary rounded-full w-6 h-6 mt-1.5"></div>
-                <h3 className="text-2xl font-bold text-primary mb-2">September 2004 – 3rd World Kannada Convention</h3>
-                <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100 ring-2 ring-primary/20">
-                  <p className="text-gray-700 leading-relaxed mb-3">
-                    <strong>Srigandha and AKKA</strong> hosted this prestigious convention at the luxurious Gaylord Palms Resort in Orlando.
-                  </p>
-                  <p className="text-gray-700">
-                    It was a great success despite a major hurricane. It began with the Merevanigae of Sri Krishnadevaraya
-                    and displayed the glory of the Vijayanagara Empire. The talent and exhibits were stupendous.
-                  </p>
-                </div>
-              </div>
-
-              {/* 2004 - 2012 */}
-              <div className="relative pl-8 md:pl-12">
-                <div className="absolute -left-3 bg-white border-4 border-primary rounded-full w-6 h-6 mt-1.5"></div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2">2004 – 2012: The Golden Era</h3>
-                <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
-                  <ul className="list-disc ml-5 text-gray-700 space-y-2">
-                    <li>Honored many artists, authors, dramatists, and musicians.</li>
-                    <li><strong>Master Hirannaiah</strong> graced Srigandha with performances.</li>
-                    <li>Dances of India by the Natya Institute of Kathak and Choreography.</li>
-                    <li>Major festivals like Shankranthi, Ugadi, Ganesha Chaturthi and Deepavali celebrated annually.</li>
-                    <li>Community engagement with FIA Tampa Bay, picnics, and charitable support.</li>
-                  </ul>
-                </div>
-              </div>
-
-              {/* May 2012 */}
-              <div className="relative pl-8 md:pl-12">
-                <div className="absolute -left-3 bg-white border-4 border-primary rounded-full w-6 h-6 mt-1.5"></div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2">May 2012 – Tampa</h3>
-                <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
-                  <p className="text-gray-700">
-                    Musical concert presented by noted Kannada playback singers <strong>Ajay Warrier</strong> and <strong>Divya Raghavan</strong> at the Hindu Temple Hall.
-                  </p>
-                </div>
-              </div>
-
-              {/* 2013 - 20th Anniversary */}
-              <div className="relative pl-8 md:pl-12">
-                <div className="absolute -left-3 bg-white border-4 border-primary rounded-full w-6 h-6 mt-1.5"></div>
-                <h3 className="text-2xl font-bold text-gray-800 mb-2">2013: 20th Anniversary Celebration</h3>
-                <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
-                  <p className="text-gray-700 mb-2 font-medium">Srigandha Camp at Lake Louisa State Park near Orlando.</p>
-                  <ul className="list-disc ml-5 text-gray-700 space-y-1">
-                    <li>Celebrated the 20th anniversary with grandeur.</li>
-                    <li>Comedy by famous comedian <strong>Sri Yashavanth Sardeshpande</strong>.</li>
-                    <li>Music by Ajay Warrier and variety entertainment by local artists.</li>
-                  </ul>
-                </div>
-              </div>
-
-              {/* 2014 - 2018 Highlights */}
-              <div className="relative pl-8 md:pl-12">
-                <div className="absolute -left-3 bg-white border-4 border-primary rounded-full w-6 h-6 mt-1.5"></div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2">2014 - 2018: Recent Highlights</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-                    <span className="text-primary font-bold block mb-1">2014</span>
-                    <p className="text-sm text-gray-700">Mruthyunjaya Doddawade Sangeetha Sanje & Hasya by Smt. Sudha Beragur.</p>
-                  </div>
-                  <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-                    <span className="text-primary font-bold block mb-1">2015</span>
-                    <p className="text-sm text-gray-700"><strong>Mukyamantri Chandru</strong> performed his famous drama along with local artists.</p>
-                  </div>
-                  <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-                    <span className="text-primary font-bold block mb-1">2016</span>
-                    <p className="text-sm text-gray-700">Ugadi celebration with music by Smt. Ratnamala Prakash.</p>
-                  </div>
-                  <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-                    <span className="text-primary font-bold block mb-1">2017</span>
-                    <p className="text-sm text-gray-700">Music concert by Smt. Manjula Gururaj and Sri Badri Prasad.</p>
-                  </div>
-                  <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-                    <span className="text-primary font-bold block mb-1">Jan 2018</span>
-                    <p className="text-sm text-gray-700">Sankranthi celebration and election of new office bearers.</p>
-                  </div>
-                  <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-                    <span className="text-primary font-bold block mb-1">Apr 2018</span>
-                    <p className="text-sm text-gray-700">Ugadi celebration and music concert by Smt. Sunita and Smt. Anita Anantaswamy.</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Silver Jubilee 2018 */}
-              <div className="relative pl-8 md:pl-12">
-                <div className="absolute -left-3 bg-white border-4 border-primary rounded-full w-6 h-6 mt-1.5"></div>
-                <div className="bg-gradient-to-r from-yellow-100 to-yellow-50 p-8 rounded-xl border border-yellow-200 shadow-md">
-                  <h3 className="text-3xl font-bold text-primary mb-4">🏆 Silver Jubilee (Sept 2018)</h3>
-                  <p className="text-gray-800 text-lg italic leading-relaxed">
-                    "On this distinguished occasion, let us all get together as one Kannada Kutumba, to celebrate the memories of yesterday, the joys of today and the hopes of tomorrow."
-                  </p>
-                </div>
-              </div>
-
+            <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Our Origins: A Dream Takes Shape</h2>
+            <div className="bg-white p-8 rounded-lg shadow-md border border-gray-100">
+              <p className="text-gray-700 leading-relaxed text-lg mb-4">
+                In the early 1990s, as Kannada families began settling across Florida, there arose a shared longing &mdash; for familiar festivals, for Kannada conversations, for traditions that reminded them of home. In response to this need, Srigandha Kannada Koota was formed as a unifying platform to bring Kannadigas together and ensure that <strong>Karnataka&rsquo;s cultural legacy would continue to flourish on American soil</strong>.
+              </p>
+              <p className="text-gray-700 leading-relaxed text-lg mb-4">
+                The first Srigandha gathering in <strong>November 1992 in Orlando</strong> set the tone for what the organization would become: a warm, inclusive space where elders, youth, artists, families, and professionals came together to celebrate Kannada culture through music, dance, literature, food, and fellowship.
+              </p>
+              <p className="text-gray-700 leading-relaxed text-lg font-medium text-primary">
+                What started as a single event soon became a movement.
+              </p>
             </div>
           </div>
 
-          <div className="prose prose-lg max-w-none mb-16">
-            <h2 className="text-3xl font-bold mb-6 text-center text-primary">Our Objectives</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="bg-white p-6 rounded-lg shadow-sm border-t-4 border-secondary hover:shadow-md transition">
-                <div className="text-3xl mb-3">🤝</div>
-                <p className="font-medium text-gray-800">
-                  To provide a forum for literary, cultural, educational, sports, community service and recreational activities for the members.
-                </p>
-              </div>
-              <div className="bg-white p-6 rounded-lg shadow-sm border-t-4 border-secondary hover:shadow-md transition">
-                <div className="text-3xl mb-3">📅</div>
-                <p className="font-medium text-gray-800">
-                  To coordinate activities of interest to the members and the community.
-                </p>
-              </div>
-              <div className="bg-white p-6 rounded-lg shadow-sm border-t-4 border-secondary hover:shadow-md transition">
-                <div className="text-3xl mb-3">🕉️</div>
-                <p className="font-medium text-gray-800">
-                  To promote the awareness of Kannada language and the cultural heritage of Karnataka.
-                </p>
-              </div>
-              <div className="bg-white p-6 rounded-lg shadow-sm border-t-4 border-secondary hover:shadow-md transition">
-                <div className="text-3xl mb-3">💝</div>
-                <p className="font-medium text-gray-800">
-                  To raise, solicit, and receive funds and donations to support the activities of the organization.
+          {/* Growth & Cultural Stewardship */}
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">A Journey of Growth and Cultural Stewardship</h2>
+            <div className="bg-white p-8 rounded-lg shadow-md border border-gray-100">
+              <p className="text-gray-700 leading-relaxed text-lg mb-4">
+                Over the decades, Srigandha has grown steadily &mdash; both in size and in purpose. From Orlando to Tampa, West Palm Beach to Fort Lauderdale, the organization expanded its reach, hosting events that reflected the <strong>diversity and richness of Karnataka&rsquo;s traditions</strong>.
+              </p>
+              <p className="text-gray-700 leading-relaxed text-lg mb-4">
+                Srigandha became known not only for its celebrations, but for its commitment to <strong>quality, authenticity, and community involvement</strong>. Cultural programs featured a blend of local talent and renowned artists from Karnataka, while youth and women&rsquo;s sessions created spaces for dialogue, learning, and leadership.
+              </p>
+              <div className="bg-gradient-to-r from-primary/10 to-secondary/10 p-6 rounded-lg mt-6">
+                <p className="text-gray-700 leading-relaxed text-lg">
+                  A defining chapter in Srigandha&rsquo;s history came in <strong>2004</strong>, when the organization, along with AKKA, co-hosted the <strong>3rd World Kannada Convention</strong> at the Gaylord Palms Resort in Orlando. Despite formidable challenges, the convention stood as a proud testament to global Kannada unity &mdash; showcasing the grandeur of Karnataka&rsquo;s history, arts, and intellectual heritage on an international stage.
                 </p>
               </div>
             </div>
           </div>
 
+          {/* Preserving the Past */}
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Preserving the Past, Empowering the Present</h2>
+            <div className="bg-white p-8 rounded-lg shadow-md border border-gray-100">
+              <p className="text-gray-700 leading-relaxed text-lg mb-6">
+                From <strong>2004 through 2018</strong>, Srigandha entered a period of remarkable cultural impact. During these years, the organization:
+              </p>
+              <ul className="space-y-3 mb-6">
+                {[
+                  'Celebrated all major Kannada festivals annually, including Ugadi, Sankranthi, Kannada Rajyotsava, Ganesh Chaturthi, and Deepavali',
+                  'Honored legendary Kannada artists, musicians, dramatists, authors, and scholars',
+                  'Hosted performances and programs that ranged from classical to contemporary',
+                  'Strengthened bonds through picnics, sports events, youth activities, and charitable initiatives',
+                  'Collaborated with multicultural organizations across the Tampa Bay region'
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 text-gray-700 text-lg">
+                    <span className="text-primary mt-1 flex-shrink-0">&#10003;</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="bg-gradient-to-r from-yellow-100 to-yellow-50 p-6 rounded-xl border border-yellow-200">
+                <p className="text-gray-800 text-lg leading-relaxed">
+                  In <strong>2018</strong>, Srigandha proudly marked its <strong>Silver Jubilee &mdash; 25 years of service, culture, and community</strong> &mdash; a milestone that reflected not just longevity, but relevance, trust, and impact.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Our Purpose */}
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold mb-8 text-center text-primary">Our Purpose and Principles</h2>
+            <p className="text-gray-700 text-lg text-center mb-8">
+              Srigandha Kannada Koota exists to serve a purpose larger than events alone. Our guiding objectives are to:
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {[
+                { icon: '&#x1F3AD;', text: 'Preserve and promote the Kannada language and Karnataka\'s cultural heritage' },
+                { icon: '&#x1F3A4;', text: 'Provide a vibrant platform for cultural, literary, educational, sports, and community service activities' },
+                { icon: '&#x1F91D;', text: 'Foster a strong sense of belonging, identity, and pride among Kannadigas' },
+                { icon: '&#x1F31F;', text: 'Inspire the next generation to embrace their roots with confidence' },
+                { icon: '&#x1F30D;', text: 'Build bridges between Karnataka and the global Kannada diaspora' },
+                { icon: '&#x2696;&#xFE0F;', text: 'Operate with integrity, transparency, and volunteer-driven leadership' }
+              ].map((item, i) => (
+                <div key={i} className="bg-white p-6 rounded-lg shadow-sm border-t-4 border-secondary hover:shadow-md transition">
+                  <div className="text-3xl mb-3" dangerouslySetInnerHTML={{ __html: item.icon }} />
+                  <p className="font-medium text-gray-800">{item.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Community */}
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">A Community Built by People</h2>
+            <div className="bg-white p-8 rounded-lg shadow-md border border-gray-100">
+              <p className="text-gray-700 leading-relaxed text-lg mb-4">
+                Srigandha is powered entirely by its people &mdash; volunteers who give their time, talent, and heart to serve the community. Guided by an elected executive committee, the organization thrives on <strong>collective leadership, inclusivity, and shared responsibility</strong>.
+              </p>
+              <p className="text-gray-700 leading-relaxed text-lg mb-4">
+                Families, elders, youth, artists, professionals, and students all play a role in shaping Srigandha. Every program, celebration, and initiative is a reflection of community ownership and participation.
+              </p>
+              <p className="text-gray-700 leading-relaxed text-lg font-medium">
+                Our strength lies not in structures or stages, but in <strong>relationships built over decades</strong> and renewed with every gathering.
+              </p>
+            </div>
+          </div>
+
+          {/* Looking Ahead */}
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Looking Ahead: Carrying the Flame Forward</h2>
+            <div className="bg-white p-8 rounded-lg shadow-md border border-gray-100">
+              <p className="text-gray-700 leading-relaxed text-lg mb-6">
+                As Srigandha moves into the future, our commitment remains unwavering &mdash; to <strong>honor tradition while embracing change</strong>. We continue to focus on:
+              </p>
+              <ul className="space-y-3 mb-6">
+                {[
+                  'Expanding cultural and educational initiatives',
+                  'Deepening youth engagement and leadership',
+                  'Strengthening community connections',
+                  'Adapting to the evolving needs of a growing Kannada diaspora'
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 text-gray-700 text-lg">
+                    <span className="text-primary mt-1 flex-shrink-0">&#10003;</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="text-center mt-8">
+                <p className="text-gray-700 text-lg italic mb-2">Because culture is not something we simply remember.</p>
+                <p className="text-gray-700 text-lg italic mb-2">It is something we <strong>practice, protect, and pass on</strong>.</p>
+                <p className="text-gray-700 text-lg italic">
+                  And as long as Kannadigas come together under the banner of Srigandha,
+                </p>
+                <p className="text-primary text-xl font-bold mt-2">Karnataka will always have a home in Florida.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Join CTA */}
           <div className="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-2xl p-8 md:p-12 text-center">
-            <h3 className="text-2xl md:text-3xl font-bold mb-4 text-gray-800">Join Our Community</h3>
+            <h3 className="text-2xl md:text-3xl font-bold mb-4 text-gray-800">Be a Part of the Legacy</h3>
+            <p className="text-gray-700 mb-2 text-lg">We invite you to join us &mdash;</p>
+            <p className="text-gray-700 mb-2 text-lg">to celebrate with us, to serve with us, and to grow with us.</p>
             <p className="text-gray-700 mb-8 max-w-2xl mx-auto text-lg">
-              Become a life member or renew your annual membership to support our initiatives and be part of our growing family.
+              Become a <strong>member of Srigandha Kannada Koota of Florida</strong> and be part of a living legacy that connects generations through language, culture, and community.
             </p>
             <a
-              href="https://widgets.mygumpu.com/memberships/signup/?sid=9"
+              href="/contact"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block bg-primary text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-opacity-90 hover:scale-105 transition transform shadow-lg"
             >
               Become a Member
             </a>
+            <div className="mt-8 text-gray-600 text-sm">
+              <p className="font-semibold">Srigandha Kannada Koota of Florida</p>
+              <p>Promoting Kannada culture and heritage in Florida</p>
+              <p className="mt-1">Tax ID: 59-3527606</p>
+            </div>
+            <p
+              className="mt-4 text-primary font-bold text-xl"
+              style={{ fontFamily: "'Noto Sans Kannada', serif" }}
+            >
+              &#x0CB8;&#x0CBF;&#x0CB0;&#x0CBF;&#x0C97;&#x0CA8;&#x0CCD;&#x0CA8;&#x0CA1;&#x0C82; &#x0C97;&#x0CC6;&#x0CB2;&#x0CCD;&#x0C97;&#x0CC6;, &#x0CB8;&#x0CBF;&#x0CB0;&#x0CBF;&#x0C97;&#x0CA8;&#x0CCD;&#x0CA8;&#x0CA1;&#x0C82; &#x0CAC;&#x0CBE;&#x0CB3;&#x0CCD;&#x0C97;&#x0CC6;
+            </p>
           </div>
         </div>
       </main>

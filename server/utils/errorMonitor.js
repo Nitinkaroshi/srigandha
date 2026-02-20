@@ -2,7 +2,7 @@ import nodemailer from 'nodemailer';
 
 // Email configuration for alerts
 const createTransporter = () => {
-  return nodemailer.createTransporter({
+  return nodemailer.createTransport({
     service: 'gmail',
     auth: {
       user: process.env.ALERT_EMAIL,

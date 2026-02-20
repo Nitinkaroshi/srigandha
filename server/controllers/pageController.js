@@ -41,10 +41,10 @@ export const getPageBySlug = async (req, res) => {
 // @access  Private/Admin
 export const createPage = async (req, res) => {
   try {
-    const { title, slug, content } = req.body;
+    const { title, slug } = req.body;
 
-    if (!title || !slug || !content) {
-      return res.status(400).json({ message: 'Please provide all required fields: title, slug, content' });
+    if (!title || !slug) {
+      return res.status(400).json({ message: 'Please provide all required fields: title, slug' });
     }
 
     const page = await Page.create(req.body);

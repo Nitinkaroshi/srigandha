@@ -44,10 +44,10 @@ export const getCommitteeMemberById = async (req, res) => {
 // @access  Private/Admin
 export const createCommitteeMember = async (req, res) => {
   try {
-    const { name, position } = req.body;
+    const { name, role, term } = req.body;
 
-    if (!name || !position) {
-      return res.status(400).json({ message: 'Please provide all required fields: name, position' });
+    if (!name || !role || !term) {
+      return res.status(400).json({ message: 'Please provide all required fields: name, role, term' });
     }
 
     const member = await Committee.create(req.body);

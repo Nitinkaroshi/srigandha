@@ -1,5 +1,5 @@
 import express from 'express';
-import { protect } from '../middleware/auth.js';
+import { protect, admin } from '../middleware/auth.js';
 import {
   register,
   login,
@@ -13,8 +13,10 @@ import {
 const router = express.Router();
 
 // Public routes
-router.post('/register', register);
 router.post('/login', login);
+
+// Protected routes - only existing admins can register new admins
+router.post('/register', protect, admin, register);
 router.post('/forgot-password', forgotPassword);
 router.post('/reset-password', resetPassword);
 

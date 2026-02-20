@@ -19,6 +19,14 @@ const eventSchema = new mongoose.Schema({
   registrationLink: {
     type: String
   },
+  price: {
+    type: Number,
+    default: 0
+  },
+  memberPrice: {
+    type: Number,
+    default: null
+  },
   type: {
     type: String,
     enum: ['upcoming', 'past'],

@@ -22,6 +22,8 @@ const Sidebar = () => {
     { path: `${basePrefix}/events`, label: 'Events', icon: '📅' },
     { path: `${basePrefix}/committee`, label: 'Committee', icon: '👥' },
     { path: `${basePrefix}/gallery`, label: 'Gallery', icon: '🖼️' },
+    { path: `${basePrefix}/bookings`, label: 'Bookings', icon: '🎟️' },
+    { path: `${basePrefix}/members`, label: 'Members', icon: '🤝' },
     { path: `${basePrefix}/contact`, label: 'Messages', icon: '📨' },
     { path: `${basePrefix}/settings`, label: 'Settings', icon: '⚙️' },
     { path: `${basePrefix}/profile`, label: 'Profile', icon: '👤' },

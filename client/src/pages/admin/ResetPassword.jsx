@@ -99,7 +99,7 @@ const ResetPassword = () => {
           <div className="text-center">
             <p className="text-red-600 mb-4">Invalid or missing reset token</p>
             <Link
-              to="/forgot-password"
+              to="/admin/forgot-password"
               className="text-primary hover:text-secondary transition"
             >
               Request a new reset link

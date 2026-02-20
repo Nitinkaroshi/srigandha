@@ -1,5 +1,6 @@
 import Contact from '../models/Contact.js';
 import { handleMongooseError } from '../utils/errorHandler.js';
+import { sendContactNotification } from '../utils/emailService.js';
 
 // @desc    Submit a new contact message
 // @route   POST /api/contact
@@ -21,6 +22,9 @@ export const submitContactForm = async (req, res) => {
 
         const savedContact = await newContact.save();
 
+        // Send email notification to admin (non-blocking)
+        sendContactNotification({ name, email, subject, message }).catch(() => {});
+
         res.status(201).json(savedContact);
     } catch (error) {
         const { status, message: errorMessage } = handleMongooseError(error);
@@ -38,6 +42,27 @@ export const getAllMessages = async (req, res) => {
     } catch (error) {
         const { status, message } = handleMongooseError(error);
         res.status(status).json({ message });
+    }
+};
+
+// @desc    Toggle message read status
+// @route   PUT /api/contact/:id/read
+// @access  Private/Admin
+export const toggleReadStatus = async (req, res) => {
+    try {
+        const message = await Contact.findById(req.params.id);
+
+        if (!message) {
+            return res.status(404).json({ message: 'Message not found' });
+        }
+
+        message.read = !message.read;
+        await message.save();
+
+        res.json(message);
+    } catch (error) {
+        const { status, message: errorMessage } = handleMongooseError(error);
+        res.status(status).json({ message: errorMessage });
     }
 };
 

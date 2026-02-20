@@ -1,7 +1,28 @@
+import { useState, useEffect } from 'react';
+import { settingsAPI } from '../../utils/api';
+
 const WhatsAppButton = () => {
+  const [whatsappLink, setWhatsappLink] = useState('');
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const response = await settingsAPI.get();
+        if (response.data?.whatsappLink) {
+          setWhatsappLink(response.data.whatsappLink);
+        }
+      } catch (error) {
+        console.error('Error fetching settings:', error);
+      }
+    };
+    fetchSettings();
+  }, []);
+
+  if (!whatsappLink) return null;
+
   return (
     <a
-      href="https://chat.whatsapp.com/LQLgj1aOn6Q56AlnFS0efT"
+      href={whatsappLink}
       target="_blank"
       rel="noopener noreferrer"
       className="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-40 group"

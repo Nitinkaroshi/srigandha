@@ -1,7 +1,7 @@
 import Event from '../models/Event.js';
 import { handleMongooseError } from '../utils/errorHandler.js';
 
-// @desc    Get all events
+// @desc    Get all events (public: active only)
 // @route   GET /api/events?type=upcoming|past
 // @access  Public
 export const getAllEvents = async (req, res) => {
@@ -14,6 +14,19 @@ export const getAllEvents = async (req, res) => {
     }
 
     const events = await Event.find(filter).sort({ date: -1 });
+    res.json(events);
+  } catch (error) {
+    const { status, message } = handleMongooseError(error);
+    res.status(status).json({ message });
+  }
+};
+
+// @desc    Get all events (admin: includes inactive)
+// @route   GET /api/events/all
+// @access  Private/Admin
+export const getAllEventsAdmin = async (req, res) => {
+  try {
+    const events = await Event.find().sort({ date: -1 });
     res.json(events);
   } catch (error) {
     const { status, message } = handleMongooseError(error);
@@ -44,10 +57,10 @@ export const getEventById = async (req, res) => {
 // @access  Private/Admin
 export const createEvent = async (req, res) => {
   try {
-    const { title, description, date, location } = req.body;
+    const { title, description, date } = req.body;
 
-    if (!title || !description || !date || !location) {
-      return res.status(400).json({ message: 'Please provide all required fields: title, description, date, location' });
+    if (!title || !description || !date) {
+      return res.status(400).json({ message: 'Please provide all required fields: title, description, date' });
     }
 
     const event = await Event.create(req.body);

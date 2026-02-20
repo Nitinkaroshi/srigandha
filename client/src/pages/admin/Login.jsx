@@ -57,7 +57,7 @@ const Login = () => {
             <div className="flex justify-between items-center mb-2">
               <label className="block text-sm font-medium text-gray-700">Password</label>
               <Link
-                to="/forgot-password"
+                to="/admin/forgot-password"
                 className="text-sm text-primary hover:text-secondary transition"
               >
                 Forgot Password?

@@ -3,7 +3,7 @@ import Sidebar from '../../components/admin/Sidebar';
 import ImageUpload from '../../components/admin/ImageUpload';
 import ConfirmModal from '../../components/common/ConfirmModal';
 import { eventsAPI } from '../../utils/api';
-import { toast } from 'react-toastify';
+import { toast } from 'sonner';
 import config from '../../config/env';
 
 const ManageEvents = () => {
@@ -20,7 +20,9 @@ const ManageEvents = () => {
     image: '',
     registrationLink: '',
     type: 'upcoming',
-    isActive: true
+    isActive: true,
+    price: 0,
+    memberPrice: ''
   });
 
   useEffect(() => {
@@ -29,7 +31,7 @@ const ManageEvents = () => {
 
   const fetchEvents = async () => {
     try {
-      const response = await eventsAPI.getAll();
+      const response = await eventsAPI.getAllAdmin();
       setEvents(response.data);
     } catch (error) {
       console.error('Error fetching events:', error);
@@ -41,11 +43,15 @@ const ManageEvents = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const submitData = {
+        ...formData,
+        memberPrice: formData.memberPrice === '' ? null : formData.memberPrice
+      };
       if (editingEvent) {
-        await eventsAPI.update(editingEvent._id, formData);
+        await eventsAPI.update(editingEvent._id, submitData);
         toast.success('Event updated successfully!');
       } else {
-        await eventsAPI.create(formData);
+        await eventsAPI.create(submitData);
         toast.success('Event created successfully!');
       }
       fetchEvents();
@@ -85,7 +91,9 @@ const ManageEvents = () => {
         image: event.image,
         registrationLink: event.registrationLink || '',
         type: event.type,
-        isActive: event.isActive
+        isActive: event.isActive,
+        price: event.price || 0,
+        memberPrice: event.memberPrice != null ? event.memberPrice : ''
       });
     } else {
       setEditingEvent(null);
@@ -96,7 +104,9 @@ const ManageEvents = () => {
         image: '',
         registrationLink: '',
         type: 'upcoming',
-        isActive: true
+        isActive: true,
+        price: 0,
+        memberPrice: ''
       });
     }
     setShowModal(true);
@@ -132,6 +142,7 @@ const ManageEvents = () => {
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Title</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Price</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
                 </tr>
@@ -146,6 +157,14 @@ const ManageEvents = () => {
                         }`}>
                         {event.type}
                       </span>
+                    </td>
+                    <td className="px-6 py-4 text-sm">
+                      {event.price > 0 ? (
+                        <span>
+                          ${event.price}
+                          {event.memberPrice != null && <span className="text-green-600 ml-1">(${event.memberPrice})</span>}
+                        </span>
+                      ) : 'Free'}
                     </td>
                     <td className="px-6 py-4">
                       <span className={`px-2 py-1 rounded-full text-xs ${event.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
@@ -236,6 +255,34 @@ const ManageEvents = () => {
                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary"
                     placeholder="https://..."
                   />
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Price ($)</label>
+                    <input
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      value={formData.price}
+                      onChange={(e) => setFormData({ ...formData, price: parseFloat(e.target.value) || 0 })}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary"
+                      placeholder="0 = Free"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Member Price ($)</label>
+                    <input
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      value={formData.memberPrice}
+                      onChange={(e) => setFormData({ ...formData, memberPrice: e.target.value === '' ? '' : parseFloat(e.target.value) })}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary"
+                      placeholder="Leave empty if no discount"
+                    />
+                    <p className="text-xs text-gray-500 mt-1">Discounted price for active members</p>
+                  </div>
                 </div>
 
                 <div>

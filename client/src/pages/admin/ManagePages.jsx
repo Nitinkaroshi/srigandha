@@ -4,7 +4,7 @@ import RichTextEditor from '../../components/admin/RichTextEditor';
 import ImageUpload from '../../components/admin/ImageUpload';
 import ConfirmModal from '../../components/common/ConfirmModal';
 import { pagesAPI } from '../../utils/api';
-import { toast } from 'react-toastify';
+import { toast } from 'sonner';
 import config from '../../config/env';
 
 const ManagePages = () => {

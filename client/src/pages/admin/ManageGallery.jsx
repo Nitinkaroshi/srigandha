@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import Sidebar from '../../components/admin/Sidebar';
 import ConfirmModal from '../../components/common/ConfirmModal';
 import { galleryAPI, uploadAPI } from '../../utils/api';
-import { toast } from 'react-toastify';
+import { toast } from 'sonner';
 import config from '../../config/env';
 
 const ManageGallery = () => {
@@ -22,7 +22,7 @@ const ManageGallery = () => {
 
   const fetchGalleries = useCallback(async () => {
     try {
-      const response = await galleryAPI.getAll();
+      const response = await galleryAPI.getAllAdmin();
       setGalleries(response.data);
     } catch (error) {
       console.error('Error fetching galleries:', error);

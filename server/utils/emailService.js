@@ -97,6 +97,59 @@ export const sendPasswordResetEmail = async (email, resetToken, userName) => {
   }
 };
 
+// Send contact form notification to admin
+export const sendContactNotification = async (contactData) => {
+  try {
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASSWORD) {
+      console.log('Email not configured. Skipping contact notification.');
+      return;
+    }
+
+    const transporter = createTransporter();
+    const adminEmail = process.env.ADMIN_EMAIL || process.env.EMAIL_USER;
+
+    const mailOptions = {
+      from: `"Srigandha Kannada Koota" <${process.env.EMAIL_USER}>`,
+      to: adminEmail,
+      subject: `New Contact Message: ${contactData.subject}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <div style="background-color: #1e40af; color: white; padding: 20px; border-radius: 8px 8px 0 0;">
+            <h1 style="margin: 0; font-size: 20px;">New Contact Form Submission</h1>
+          </div>
+          <div style="background-color: #f5f5f5; padding: 20px; border-radius: 0 0 8px 8px;">
+            <div style="background-color: white; padding: 15px; border-radius: 6px; margin-bottom: 15px;">
+              <p style="margin: 0;"><strong>From:</strong> ${contactData.name}</p>
+              <p style="margin: 10px 0 0 0;"><strong>Email:</strong> <a href="mailto:${contactData.email}">${contactData.email}</a></p>
+              <p style="margin: 10px 0 0 0;"><strong>Subject:</strong> ${contactData.subject}</p>
+              <p style="margin: 10px 0 0 0;"><strong>Date:</strong> ${new Date().toLocaleString()}</p>
+            </div>
+            <div style="background-color: white; padding: 15px; border-radius: 6px;">
+              <p style="margin: 0;"><strong>Message:</strong></p>
+              <p style="margin: 10px 0 0 0; line-height: 1.6; white-space: pre-line;">${contactData.message}</p>
+            </div>
+            <div style="margin-top: 15px; text-align: center;">
+              <a href="${process.env.CLIENT_URL || 'http://localhost:5173'}/admin/contact"
+                 style="display: inline-block; padding: 10px 24px; background-color: #1e40af; color: white; text-decoration: none; border-radius: 5px;">
+                View in Admin Panel
+              </a>
+            </div>
+          </div>
+          <div style="text-align: center; margin-top: 15px; color: #666; font-size: 12px;">
+            <p>Srigandha Kannada Koota CMS - Automated Notification</p>
+          </div>
+        </div>
+      `,
+    };
+
+    await transporter.sendMail(mailOptions);
+    console.log('Contact notification email sent');
+  } catch (error) {
+    // Don't throw - notification failure shouldn't break the contact form
+    console.error('Failed to send contact notification:', error.message);
+  }
+};
+
 // Send password change confirmation email
 export const sendPasswordChangeConfirmation = async (email, userName) => {
   try {

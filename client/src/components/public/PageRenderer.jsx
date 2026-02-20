@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import Hero from './Hero';
+import config from '../../config/env';
 
 const PageRenderer = ({ sections }) => {
   if (!sections || sections.length === 0) {
@@ -37,7 +38,7 @@ const PageRenderer = ({ sections }) => {
               {section.content.url && (
                 <div className="text-center">
                   <img
-                    src={`http://localhost:5000${section.content.url}`}
+                    src={`${config.baseUrl}${section.content.url}`}
                     alt={section.content.caption || 'Page image'}
                     className="mx-auto rounded-lg shadow-lg max-w-full"
                   />

@@ -10,14 +10,37 @@ const api = axios.create({
   },
 });
 
+// Dual-token request interceptor
 api.interceptors.request.use(
   (config) => {
     try {
       if (typeof window !== 'undefined') {
-        const storage = window.sessionStorage || window.localStorage;
-        const token = storage.getItem('token');
-        if (token) {
-          config.headers.Authorization = `Bearer ${token}`;
+        const url = config.url || '';
+        // Member-auth routes use memberToken from localStorage
+        if (url.startsWith('/member-auth')) {
+          const memberToken = localStorage.getItem('memberToken');
+          if (memberToken) {
+            config.headers.Authorization = `Bearer ${memberToken}`;
+          }
+        }
+        // Booking/event routes: attach memberToken if present (for optional member detection)
+        else if (url.startsWith('/bookings') || url.startsWith('/events')) {
+          const memberToken = localStorage.getItem('memberToken');
+          const adminToken = window.sessionStorage?.getItem('token');
+          // Prefer admin token for admin routes, member token for public
+          if (adminToken) {
+            config.headers.Authorization = `Bearer ${adminToken}`;
+          } else if (memberToken) {
+            config.headers.Authorization = `Bearer ${memberToken}`;
+          }
+        }
+        // All other routes use admin token from sessionStorage
+        else {
+          const storage = window.sessionStorage || window.localStorage;
+          const token = storage.getItem('token');
+          if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+          }
         }
       }
     } catch (error) {
@@ -36,17 +59,23 @@ api.interceptors.response.use(
   },
   (error) => {
     if (error.response?.status === 401) {
-      // Don't log out if it's a login attempt failure
-      const isLoginRequest = error.config.url.includes('/auth/login');
-      const isChangePassword = error.config.url.includes('/auth/change-password');
+      const url = error.config?.url || '';
+      // Don't redirect to admin login for member auth or public routes
+      const isMemberRoute = url.startsWith('/member-auth');
+      const isLoginRequest = url.includes('/auth/login');
+      const isChangePassword = url.includes('/auth/change-password');
 
-      if (!isLoginRequest && !isChangePassword) {
+      if (!isLoginRequest && !isChangePassword && !isMemberRoute) {
         try {
           if (typeof window !== 'undefined') {
-            const storage = window.sessionStorage || window.localStorage;
-            storage.removeItem('token');
-            storage.removeItem('user');
-            window.location.href = '/admin/login';
+            // Only redirect to admin login if we were using an admin token
+            const adminToken = window.sessionStorage?.getItem('token');
+            if (adminToken) {
+              const storage = window.sessionStorage || window.localStorage;
+              storage.removeItem('token');
+              storage.removeItem('user');
+              window.location.href = '/admin/login';
+            }
           }
         } catch (storageError) {
           console.error('Error in 401 response handler:', storageError);
@@ -67,6 +96,14 @@ export const authAPI = {
   resetPassword: (data) => api.post('/auth/reset-password', data),
 };
 
+export const memberAuthAPI = {
+  googleAuth: (credential) => api.post('/member-auth/google', { credential }),
+  getProfile: () => api.get('/member-auth/profile'),
+  updateProfile: (data) => api.put('/member-auth/profile', data),
+  getBookings: () => api.get('/member-auth/bookings'),
+  registerPlan: (data) => api.post('/member-auth/register-plan', data),
+};
+
 export const pagesAPI = {
   getAll: () => api.get('/pages'),
   getBySlug: (slug) => api.get(`/pages/${slug}`),
@@ -77,6 +114,7 @@ export const pagesAPI = {
 
 export const eventsAPI = {
   getAll: (type) => api.get(`/events${type ? `?type=${type}` : ''}`),
+  getAllAdmin: () => api.get('/events/all'),
   getById: (id) => api.get(`/events/${id}`),
   create: (data) => api.post('/events', data),
   update: (id, data) => api.put(`/events/${id}`, data),
@@ -93,6 +131,7 @@ export const committeeAPI = {
 
 export const galleryAPI = {
   getAll: () => api.get('/gallery'),
+  getAllAdmin: () => api.get('/gallery/all'),
   getById: (id) => api.get(`/gallery/${id}`),
   create: (data) => api.post('/gallery', data),
   update: (id, data) => api.put(`/gallery/${id}`, data),
@@ -102,6 +141,7 @@ export const galleryAPI = {
 export const contactAPI = {
   submit: (data) => api.post('/contact', data),
   getAll: () => api.get('/contact'),
+  toggleRead: (id) => api.put(`/contact/${id}/read`),
   delete: (id) => api.delete(`/contact/${id}`),
 };
 
@@ -149,6 +189,22 @@ export const uploadAPI = {
     });
   },
   delete: (filename) => api.delete(`/upload/${filename}`),
+};
+
+export const bookingsAPI = {
+  create: (data) => api.post('/bookings', data),
+  getAll: (params) => api.get('/bookings', { params }),
+  getStats: (eventId) => api.get(`/bookings/stats/${eventId}`),
+  updateStatus: (id, status) => api.put(`/bookings/${id}`, { status }),
+  delete: (id) => api.delete(`/bookings/${id}`),
+};
+
+export const membersAPI = {
+  register: (data) => api.post('/members', data),
+  getAll: (params) => api.get('/members', { params }),
+  getStats: () => api.get('/members/stats'),
+  update: (id, data) => api.put(`/members/${id}`, data),
+  delete: (id) => api.delete(`/members/${id}`),
 };
 
 export default api;

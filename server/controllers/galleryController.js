@@ -1,12 +1,25 @@
 import Gallery from '../models/Gallery.js';
 import { handleMongooseError } from '../utils/errorHandler.js';
 
-// @desc    Get all gallery items
+// @desc    Get all gallery items (public: published only)
 // @route   GET /api/gallery
 // @access  Public
 export const getAllGalleryItems = async (req, res) => {
   try {
     const items = await Gallery.find({ isPublished: true }).sort({ eventDate: -1 });
+    res.json(items);
+  } catch (error) {
+    const { status, message } = handleMongooseError(error);
+    res.status(status).json({ message });
+  }
+};
+
+// @desc    Get all gallery items (admin: includes unpublished)
+// @route   GET /api/gallery/all
+// @access  Private/Admin
+export const getAllGalleryItemsAdmin = async (req, res) => {
+  try {
+    const items = await Gallery.find().sort({ eventDate: -1 });
     res.json(items);
   } catch (error) {
     const { status, message } = handleMongooseError(error);

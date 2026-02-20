@@ -1,6 +1,8 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import compression from 'compression';
+import rateLimit from 'express-rate-limit';
 import connectDB from './config/db.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -16,6 +18,9 @@ import contactRoutes from './routes/contact.js';
 import settingsRoutes from './routes/settings.js';
 import uploadRoutes from './routes/upload.js';
 import carouselRoutes from './routes/carousel.js';
+import bookingRoutes from './routes/bookings.js';
+import memberRoutes from './routes/members.js';
+import memberAuthRoutes from './routes/memberAuth.js';
 
 dotenv.config();
 
@@ -26,19 +31,74 @@ const app = express();
 
 connectDB();
 
+// Gzip/Brotli compression for all responses
+app.use(compression());
+
+// CORS - support multiple origins for production
+const allowedOrigins = [
+  process.env.CLIENT_URL || 'http://localhost:5173',
+  process.env.ADMIN_URL,
+].filter(Boolean);
+
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:5173',
+  origin: (origin, callback) => {
+    // Allow requests with no origin (mobile apps, curl, etc.)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.some(allowed => origin === allowed || origin.endsWith(allowed.replace(/^https?:\/\//, '')))) {
+      return callback(null, true);
+    }
+    callback(null, false);
+  },
   credentials: true
 }));
 
-app.use(express.json());
+// Rate limiting
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100,
+  message: { message: 'Too many requests, please try again later.' }
+});
+
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  message: { message: 'Too many login attempts, please try again later.' }
+});
+
+const contactLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 5,
+  message: { message: 'Too many messages sent, please try again later.' }
+});
+
+app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
+// Static uploads directory
 const uploadsDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir);
+  fs.mkdirSync(uploadsDir, { recursive: true });
 }
-app.use('/uploads', express.static(uploadsDir));
+app.use('/uploads', express.static(uploadsDir, {
+  maxAge: '7d',
+  etag: true
+}));
+
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.json({
+    status: 'ok',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime()
+  });
+});
+
+// API routes with rate limiting
+app.use('/api/auth/login', authLimiter);
+app.use('/api/auth/forgot-password', authLimiter);
+app.use('/api/member-auth/google', authLimiter);
+app.use('/api/contact', contactLimiter);
+app.use('/api', apiLimiter);
 
 app.use('/api/auth', authRoutes);
 app.use('/api/pages', pageRoutes);
@@ -49,20 +109,38 @@ app.use('/api/contact', contactRoutes);
 app.use('/api/settings', settingsRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/carousel', carouselRoutes);
-
-app.get('/', (req, res) => {
-  res.json({ message: 'Srigandha API Server Running' });
-});
+app.use('/api/bookings', bookingRoutes);
+app.use('/api/members', memberRoutes);
+app.use('/api/member-auth', memberAuthRoutes);
 
 app.get('/api', (req, res) => {
   res.json({ message: 'API is running', version: '1.0.0' });
 });
 
+// Serve React client build in production
+const clientBuildPath = path.join(__dirname, '../client/dist');
+if (fs.existsSync(clientBuildPath)) {
+  app.use(express.static(clientBuildPath, {
+    maxAge: '1d',
+    etag: true
+  }));
+
+  // SPA fallback - serve index.html for all non-API routes
+  app.get('*', (req, res) => {
+    if (!req.path.startsWith('/api') && !req.path.startsWith('/uploads')) {
+      res.sendFile(path.join(clientBuildPath, 'index.html'));
+    }
+  });
+} else {
+  app.get('/', (req, res) => {
+    res.json({ message: 'Srigandha API Server Running' });
+  });
+}
+
 // Global error handler middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
 
-  // Send error alert email in production
   if (process.env.NODE_ENV === 'production') {
     sendErrorAlert(err, {
       endpoint: req.originalUrl,
@@ -79,7 +157,6 @@ const PORT = process.env.PORT || 5000;
 const server = app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 
-  // Send restart notification on server start (only in production)
   if (process.env.NODE_ENV === 'production') {
     sendServerRestartAlert().catch(console.error);
   }
@@ -110,7 +187,6 @@ process.on('uncaughtException', (error) => {
     ).catch(console.error);
   }
 
-  // Give time for alert to be sent before exiting
   setTimeout(() => {
     process.exit(1);
   }, 2000);

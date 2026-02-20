@@ -4,6 +4,7 @@ import Footer from '../../components/public/Footer';
 import Hero from '../../components/public/Hero';
 import WhatsAppButton from '../../components/public/WhatsAppButton';
 import { committeeAPI } from '../../utils/api';
+import config from '../../config/env';
 
 const Committee = () => {
   const [activeTab, setActiveTab] = useState('current');
@@ -89,7 +90,7 @@ const Committee = () => {
                       <div key={member._id} className="bg-white rounded-lg shadow-md p-6 text-center hover:shadow-xl transition-shadow">
                         {member.photo ? (
                           <img
-                            src={`http://localhost:5000${member.photo}`}
+                            src={`${config.baseUrl}${member.photo}`}
                             alt={member.name}
                             className="w-32 h-32 mx-auto mb-4 rounded-full object-cover"
                           />
@@ -135,7 +136,7 @@ const Committee = () => {
                           <div key={member._id} className="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
                             {member.photo ? (
                               <img
-                                src={`http://localhost:5000${member.photo}`}
+                                src={`${config.baseUrl}${member.photo}`}
                                 alt={member.name}
                                 className="w-12 h-12 rounded-full object-cover flex-shrink-0"
                               />

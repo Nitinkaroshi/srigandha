@@ -150,7 +150,7 @@ const siteSettingsData = {
       duration: '1 Year Membership',
       benefits: ['Discounted Event Tickets', 'Network With Members', 'Community Support'],
       popular: false,
-      registrationLink: 'https://widgets.mygumpu.com/memberships/signup/?sid=9'
+      registrationLink: 'https://app.featsclub.com/membership.html?ps7Pa4IiKXQHQlCusbXFUTMLBH03'
     },
     {
       name: 'Family',
@@ -158,7 +158,7 @@ const siteSettingsData = {
       duration: '1 Year Membership',
       benefits: ['Discounted Event Tickets', 'Network With Members', 'Family Benefits'],
       popular: true,
-      registrationLink: 'https://widgets.mygumpu.com/memberships/signup/?sid=9'
+      registrationLink: 'https://app.featsclub.com/membership.html?ps7Pa4IiKXQHQlCusbXFUTMLBH03'
     },
     {
       name: 'Lifetime',
@@ -166,10 +166,11 @@ const siteSettingsData = {
       duration: 'Lifetime Membership',
       benefits: ['All Benefits Forever', 'Priority Access', 'Exclusive Perks'],
       popular: false,
-      registrationLink: 'https://widgets.mygumpu.com/memberships/signup/?sid=9'
+      registrationLink: 'https://app.featsclub.com/membership.html?ps7Pa4IiKXQHQlCusbXFUTMLBH03'
     }
   ],
-  membershipPortalUrl: 'https://srigandhafl.mygumpu.com/public/home',
+  membershipPortalUrl: 'https://app.featsclub.com/membership.html?ps7Pa4IiKXQHQlCusbXFUTMLBH03',
+  whatsappLink: 'https://chat.whatsapp.com/LQLgj1aOn6Q56AlnFS0efT',
   contactInfo: {
     email: 'srigandha@yahoo.com',
     phone: '(813) 508-0146',

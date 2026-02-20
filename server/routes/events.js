@@ -1,7 +1,9 @@
 import express from 'express';
 import { protect, admin } from '../middleware/auth.js';
+import { optionalMember } from '../middleware/memberAuth.js';
 import {
   getAllEvents,
+  getAllEventsAdmin,
   getEventById,
   createEvent,
   updateEvent,
@@ -10,7 +12,8 @@ import {
 
 const router = express.Router();
 
-router.get('/', getAllEvents);
+router.get('/', optionalMember, getAllEvents);
+router.get('/all', protect, admin, getAllEventsAdmin);
 router.get('/:id', getEventById);
 router.post('/', protect, admin, createEvent);
 router.put('/:id', protect, admin, updateEvent);

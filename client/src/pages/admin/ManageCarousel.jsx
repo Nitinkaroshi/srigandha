@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { toast } from 'react-toastify';
+import { toast } from 'sonner';
 import Sidebar from '../../components/admin/Sidebar';
 import { carouselAPI } from '../../utils/api';
 import config from '../../config/env';

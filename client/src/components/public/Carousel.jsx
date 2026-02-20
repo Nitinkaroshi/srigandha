@@ -36,7 +36,7 @@ const Carousel = ({ images, autoPlayInterval = 5000 }) => {
   }
 
   return (
-    <div className="relative w-full h-[250px] sm:h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden rounded-lg shadow-xl bg-gray-100">
+    <div className="relative w-full h-[350px] sm:h-[500px] md:h-[650px] lg:h-[750px] xl:h-[800px] overflow-hidden shadow-xl bg-gray-100">
       {/* Images */}
       <div className="relative h-full">
         {images.map((image, index) => (
@@ -48,11 +48,12 @@ const Carousel = ({ images, autoPlayInterval = 5000 }) => {
             <img
               src={image.src}
               alt={image.alt || `Slide ${index + 1}`}
-              className="w-full h-full object-contain"
+              className="w-full h-full object-cover"
+              loading={index === 0 ? 'eager' : 'lazy'}
             />
             {image.caption && (
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
-                <p className="text-white text-lg md:text-xl font-semibold text-center">
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-8">
+                <p className="text-white text-xl md:text-2xl font-semibold text-center">
                   {image.caption}
                 </p>
               </div>
@@ -61,10 +62,10 @@ const Carousel = ({ images, autoPlayInterval = 5000 }) => {
         ))}
       </div>
 
-      {/* Previous Button - Hidden */}
+      {/* Previous Button */}
       <button
         onClick={goToPrevious}
-        className="hidden absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-all duration-300 z-10"
+        className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white p-3 rounded-full transition-all duration-300 z-10"
         aria-label="Previous slide"
       >
         <svg
@@ -82,10 +83,10 @@ const Carousel = ({ images, autoPlayInterval = 5000 }) => {
         </svg>
       </button>
 
-      {/* Next Button - Hidden */}
+      {/* Next Button */}
       <button
         onClick={goToNext}
-        className="hidden absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-all duration-300 z-10"
+        className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white p-3 rounded-full transition-all duration-300 z-10"
         aria-label="Next slide"
       >
         <svg
@@ -104,7 +105,7 @@ const Carousel = ({ images, autoPlayInterval = 5000 }) => {
       </button>
 
       {/* Dots Indicator */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2 z-10">
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex space-x-2 z-10">
         {images.map((_, index) => (
           <button
             key={index}

@@ -86,7 +86,7 @@ const Dashboard = () => {
             <div className="bg-white rounded-lg shadow-md p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-gray-600 text-sm">Unread Messages</p>
+                  <p className="text-gray-600 text-sm">Contact Messages</p>
                   <p className="text-3xl font-bold text-blue-600">{stats.messages}</p>
                 </div>
                 <div className="text-4xl">📨</div>

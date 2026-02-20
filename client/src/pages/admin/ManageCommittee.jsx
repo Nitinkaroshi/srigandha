@@ -3,7 +3,7 @@ import Sidebar from '../../components/admin/Sidebar';
 import ImageUpload from '../../components/admin/ImageUpload';
 import ConfirmModal from '../../components/common/ConfirmModal';
 import { committeeAPI } from '../../utils/api';
-import { toast } from 'react-toastify';
+import { toast } from 'sonner';
 import config from '../../config/env';
 
 const ManageCommittee = () => {
