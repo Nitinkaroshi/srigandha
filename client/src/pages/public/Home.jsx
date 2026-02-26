@@ -146,7 +146,7 @@ const Home = () => {
     if (!pm || !pm.message) return null;
 
     return (
-      <section className="py-16 bg-gradient-to-b from-white to-gray-50">
+      <section className="py-16 bg-gray-100">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-800">
             {pm.title || "President"}'s Message
@@ -305,7 +305,7 @@ const Home = () => {
       {/* Sponsors */}
       {renderSponsors()}
 
-      <section className="py-16 bg-gradient-to-b from-gray-50 to-white">
+      <section className="py-16 bg-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold mb-6">About Srigandha Kannada Koota</h2>
           <p className="text-lg text-gray-700 max-w-3xl mx-auto mb-8">
@@ -328,7 +328,7 @@ const Home = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
 
-      <main className="flex-grow">
+      <main className="flex-grow bg-gray-50">
         {loading ? (
           <div className="flex items-center justify-center py-16">
             <div className="text-xl">Loading...</div>
