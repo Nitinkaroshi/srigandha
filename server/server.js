@@ -32,6 +32,8 @@ app.use(compression());
 // CORS
 const allowedOrigins = [
   process.env.CLIENT_URL || 'http://localhost:5173',
+  'https://www.srigandhafl.org',
+  'https://srigandhafl.org',
 ].filter(Boolean);
 
 app.use(cors({
