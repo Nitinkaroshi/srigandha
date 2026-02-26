@@ -4,128 +4,48 @@ import Footer from '../../components/public/Footer';
 import Carousel from '../../components/public/Carousel';
 import PageRenderer from '../../components/public/PageRenderer';
 import WhatsAppButton from '../../components/public/WhatsAppButton';
-import { pagesAPI, settingsAPI, carouselAPI, membersAPI, memberAuthAPI } from '../../utils/api';
-import { useMemberAuth } from '../../context/MemberAuthContext';
-import { toast } from 'sonner';
+import EventCard from '../../components/public/EventCard';
+import { pagesAPI, settingsAPI, carouselAPI, eventsAPI } from '../../utils/api';
 import config from '../../config/env';
 import image1 from '../../assets/SKK_Sports_Event_2025.png';
 import image2 from '../../assets/Srigandha_Kannada_shaale_registration_Web_banner_2.jpg';
 import image3 from '../../assets/Srigandha_Teachers_Appreciation_Award.jpeg';
 
-const MembershipPlans = ({ plans, portalUrl }) => {
-  const { member, isMemberAuthenticated, isActiveMember, isGuestMember, refreshProfile } = useMemberAuth();
-  const [selectedPlan, setSelectedPlan] = useState(null);
-  const [submitting, setSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    city: '',
-    state: '',
-    zip: '',
-    paymentMethod: 'online',
-    notes: ''
-  });
-
-  // Auto-fill form for logged-in members
-  useEffect(() => {
-    if (isMemberAuthenticated && member) {
-      setFormData((prev) => ({
-        ...prev,
-        name: member.name || prev.name,
-        email: member.email || prev.email,
-        phone: member.phone || prev.phone,
-        city: member.address?.city || prev.city,
-        state: member.address?.state || prev.state,
-        zip: member.address?.zip || prev.zip,
-      }));
-    }
-  }, [isMemberAuthenticated, member]);
-
-  const handleRegister = (planName) => {
-    if (submitted) return;
-    setSelectedPlan(selectedPlan === planName ? null : planName);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setSubmitting(true);
-    try {
-      // If logged in as guest member, use the registerPlan API
-      if (isMemberAuthenticated && isGuestMember) {
-        await memberAuthAPI.registerPlan({ plan: selectedPlan });
-        await refreshProfile();
-        toast.success('Membership application submitted! We will review it shortly.');
-        setSubmitted(true);
-        setSelectedPlan(null);
-      } else {
-        // For non-logged-in users, use the public registration
-        await membersAPI.register({
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          address: { city: formData.city, state: formData.state, zip: formData.zip },
-          plan: selectedPlan,
-          paymentMethod: formData.paymentMethod,
-          notes: formData.notes
-        });
-        toast.success('Membership registration submitted! We will review and confirm shortly.');
-        setSubmitted(true);
-        setSelectedPlan(null);
-      }
-    } catch (error) {
-      toast.error(error.response?.data?.message || 'Registration failed. Please try again.');
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
-  // Determine what to show for each plan's action button
-  const renderPlanAction = (plan) => {
-    // Active member - show badge
-    if (isMemberAuthenticated && isActiveMember) {
-      return (
-        <span className="bg-green-100 text-green-800 px-4 py-3 rounded-md text-sm font-medium">
-          Active Member
-        </span>
-      );
-    }
-    // Pending member - show under review
-    if (isMemberAuthenticated && member?.status === 'pending') {
-      return (
-        <span className="bg-yellow-100 text-yellow-800 px-4 py-3 rounded-md text-sm font-medium">
-          Under Review
-        </span>
-      );
-    }
-    // Guest or not logged in - show register button
-    if (!submitted) {
-      return (
-        <button
-          onClick={() => handleRegister(plan.name)}
-          className="bg-secondary text-white px-6 py-3 rounded-md hover:bg-opacity-90 transition"
-        >
-          {selectedPlan === plan.name ? 'Cancel' : 'Register Here'}
-        </button>
-      );
-    }
-    return (
-      <span className="bg-green-100 text-green-800 px-4 py-3 rounded-md text-sm font-medium">
-        Registered
-      </span>
-    );
-  };
+const MembershipPlans = () => {
+  const plans = [
+    {
+      name: 'Single',
+      price: 20,
+      duration: '1 Year Membership',
+      benefits: ['Discounted Event Tickets', 'Network With Members', 'Community Updates'],
+    },
+    {
+      name: 'Family',
+      price: 35,
+      duration: '1 Year Membership',
+      popular: true,
+      benefits: ['Discounted Event Tickets', 'Network With Members', 'Community Updates', 'Family Coverage'],
+    },
+    {
+      name: 'Life Time',
+      price: 350,
+      duration: 'One-Time Payment',
+      benefits: ['Discounted Event Tickets', 'Network With Members', 'Community Updates', 'Lifetime Access'],
+    },
+  ];
 
   return (
-    <section className="bg-gray-100 py-16">
+    <section className="py-16 bg-gradient-to-b from-gray-100 to-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-bold text-center mb-12">Membership Plans</h2>
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-gray-800">Become a Member Today</h2>
+        <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+          Join the Srigandha Kannada Koota family and enjoy exclusive benefits while supporting our community.
+        </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {plans.map((plan, index) => (
             <div
               key={index}
-              className={`bg-white rounded-lg shadow-md p-8 text-center ${plan.popular ? 'border-4 border-primary' : ''}`}
+              className={`bg-white rounded-lg shadow-md p-8 text-center hover:shadow-xl transition-shadow ${plan.popular ? 'border-4 border-primary ring-2 ring-primary/20' : ''}`}
             >
               {plan.popular && (
                 <div className="bg-primary text-white text-sm px-3 py-1 rounded-full inline-block mb-4">
@@ -135,107 +55,22 @@ const MembershipPlans = ({ plans, portalUrl }) => {
               <h3 className="text-2xl font-bold mb-4">{plan.name}</h3>
               <div className="text-4xl font-bold text-primary mb-4">${plan.price}</div>
               <p className="text-gray-600 mb-6">{plan.duration}</p>
-              <ul className="text-left space-y-2 mb-6">
-                {plan.benefits && plan.benefits.map((benefit, i) => (
-                  <li key={i}>&#10003; {benefit}</li>
+              <ul className="text-left space-y-2 mb-8">
+                {plan.benefits.map((benefit, i) => (
+                  <li key={i} className="flex items-center gap-2">
+                    <span className="text-green-500">&#10003;</span>
+                    <span>{benefit}</span>
+                  </li>
                 ))}
               </ul>
-
-              <div className="flex flex-wrap gap-2 justify-center">
-                {plan.registrationLink && (
-                  <a
-                    href={plan.registrationLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-primary text-white px-6 py-3 rounded-md hover:bg-opacity-90 transition"
-                  >
-                    Register & Pay
-                  </a>
-                )}
-                {renderPlanAction(plan)}
-              </div>
-
-              {selectedPlan === plan.name && (
-                <form onSubmit={handleSubmit} className="mt-6 space-y-3 border-t pt-4 text-left">
-                  {isMemberAuthenticated && (
-                    <div className="bg-blue-50 text-blue-700 text-xs px-3 py-2 rounded-md mb-2">
-                      Signed in as {member?.name || member?.email} - form auto-filled
-                    </div>
-                  )}
-                  <input
-                    type="text"
-                    required
-                    placeholder="Full Name"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-primary focus:border-transparent"
-                  />
-                  <input
-                    type="email"
-                    required
-                    placeholder="Email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-primary focus:border-transparent"
-                  />
-                  <input
-                    type="tel"
-                    required
-                    placeholder="Phone Number"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-primary focus:border-transparent"
-                  />
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                    <input
-                      type="text"
-                      placeholder="City"
-                      value={formData.city}
-                      onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                      className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-primary focus:border-transparent"
-                    />
-                    <input
-                      type="text"
-                      placeholder="State"
-                      value={formData.state}
-                      onChange={(e) => setFormData({ ...formData, state: e.target.value })}
-                      className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-primary focus:border-transparent"
-                    />
-                    <input
-                      type="text"
-                      placeholder="ZIP"
-                      value={formData.zip}
-                      onChange={(e) => setFormData({ ...formData, zip: e.target.value })}
-                      className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-primary focus:border-transparent"
-                    />
-                  </div>
-                  <select
-                    value={formData.paymentMethod}
-                    onChange={(e) => setFormData({ ...formData, paymentMethod: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-primary"
-                  >
-                    <option value="online">Online Payment</option>
-                    <option value="zelle">Zelle</option>
-                    <option value="check">Check</option>
-                    <option value="cash">Cash</option>
-                    <option value="other">Other</option>
-                  </select>
-                  <textarea
-                    placeholder="Any notes (optional)"
-                    value={formData.notes}
-                    onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                    rows="2"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-primary focus:border-transparent"
-                  />
-                  <button
-                    type="submit"
-                    disabled={submitting}
-                    className="w-full bg-primary text-white py-2 rounded-md hover:bg-opacity-90 transition text-sm disabled:opacity-50"
-                  >
-                    {submitting ? 'Submitting...' : 'Submit Registration'}
-                  </button>
-                </form>
-              )}
+              <a
+                href="https://www.mygumpu.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block bg-secondary text-white px-8 py-3 rounded-md hover:bg-opacity-90 transition font-semibold w-full"
+              >
+                Register Now
+              </a>
             </div>
           ))}
         </div>
@@ -248,25 +83,13 @@ const Home = () => {
   const [pageData, setPageData] = useState(null);
   const [settings, setSettings] = useState(null);
   const [carouselSlides, setCarouselSlides] = useState([]);
+  const [upcomingEvents, setUpcomingEvents] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Default carousel images - used as fallback
   const defaultCarouselImages = [
-    {
-      src: image1,
-      alt: 'SKK Sports Event 2025',
-      caption: 'Join us for the SKK Sports Event 2025!'
-    },
-    {
-      src: image2,
-      alt: 'Kannada Shaale Registration',
-      caption: 'Register now for Kannada Shaale'
-    },
-    {
-      src: image3,
-      alt: 'Teachers Appreciation Award',
-      caption: 'Celebrating our dedicated teachers'
-    }
+    { src: image1, alt: 'SKK Sports Event 2025', caption: 'Join us for the SKK Sports Event 2025!' },
+    { src: image2, alt: 'Kannada Shaale Registration', caption: 'Register now for Kannada Shaale' },
+    { src: image3, alt: 'Teachers Appreciation Award', caption: 'Celebrating our dedicated teachers' }
   ];
 
   useEffect(() => {
@@ -275,30 +98,17 @@ const Home = () => {
 
   const fetchData = async () => {
     try {
-      const pagePromise = pagesAPI.getBySlug('home').catch(err => {
-        console.error('Error fetching home page:', err);
-        return { data: null };
-      });
-
-      const settingsPromise = settingsAPI.get().catch(err => {
-        console.error('Error fetching settings:', err);
-        return { data: null };
-      });
-
-      const carouselPromise = carouselAPI.getAll().catch(err => {
-        console.error('Error fetching carousel:', err);
-        return { data: [] };
-      });
-
-      const [pageRes, settingsRes, carouselRes] = await Promise.all([
-        pagePromise,
-        settingsPromise,
-        carouselPromise
+      const [pageRes, settingsRes, carouselRes, eventsRes] = await Promise.all([
+        pagesAPI.getBySlug('home').catch(() => ({ data: null })),
+        settingsAPI.get().catch(() => ({ data: null })),
+        carouselAPI.getAll().catch(() => ({ data: [] })),
+        eventsAPI.getAll('upcoming').catch(() => ({ data: [] })),
       ]);
 
       setPageData(pageRes.data);
       setSettings(settingsRes.data);
       setCarouselSlides(carouselRes.data);
+      setUpcomingEvents(eventsRes.data);
     } catch (error) {
       console.error('Error fetching data:', error);
     } finally {
@@ -306,31 +116,23 @@ const Home = () => {
     }
   };
 
-  // Get carousel images - prioritize API data, then page data, then defaults
   const getCarouselImages = () => {
-    // First, check if we have carousel slides from API
     if (carouselSlides && carouselSlides.length > 0) {
-      const images = carouselSlides.map(slide => ({
+      return carouselSlides.map(slide => ({
         src: `${config.baseUrl}${slide.image}`,
         alt: slide.title,
         caption: slide.caption
       }));
-      return images;
     }
-
-    // Second, check page data sections
     if (pageData && pageData.sections) {
       const carouselSection = pageData.sections.find(s => s.type === 'carousel');
       if (carouselSection && carouselSection.content.images) {
         return carouselSection.content.images;
       }
     }
-
-    // Finally, return default images
     return defaultCarouselImages;
   };
 
-  // President's Message section
   const renderPresidentMessage = () => {
     const pm = settings?.presidentMessage;
     if (!pm || !pm.message) return null;
@@ -378,7 +180,6 @@ const Home = () => {
     );
   };
 
-  // Sponsors section
   const renderSponsors = () => {
     const activeSponsors = settings?.sponsors?.filter(s => s.isActive)?.sort((a, b) => a.order - b.order);
     if (!activeSponsors || activeSponsors.length === 0) return null;
@@ -421,7 +222,36 @@ const Home = () => {
     );
   };
 
-  // Render default home page content as fallback
+  const renderUpcomingEvents = () => {
+    if (!upcomingEvents || upcomingEvents.length === 0) return null;
+
+    return (
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-gray-800">
+            Register for Upcoming Events
+          </h2>
+          <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+            Don't miss out on our exciting community events!
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {upcomingEvents.slice(0, 3).map((event) => (
+              <EventCard key={event._id} event={event} />
+            ))}
+          </div>
+          <div className="text-center mt-10">
+            <a
+              href="/events"
+              className="inline-block bg-primary text-white font-semibold px-8 py-3 rounded-md hover:bg-opacity-90 transition shadow-md hover:shadow-lg"
+            >
+              View All Events
+            </a>
+          </div>
+        </div>
+      </section>
+    );
+  };
+
   const renderDefaultContent = () => (
     <>
       {/* Featured Images Section */}
@@ -458,14 +288,16 @@ const Home = () => {
       {/* President's Message */}
       {renderPresidentMessage()}
 
+      {/* Upcoming Events */}
+      {renderUpcomingEvents()}
+
+      {/* Membership Plans */}
+      <MembershipPlans />
+
       {/* Sponsors */}
       {renderSponsors()}
 
-      {settings?.membershipPlans && settings.membershipPlans.length > 0 && (
-        <MembershipPlans plans={settings.membershipPlans} portalUrl={settings.membershipPortalUrl} />
-      )}
-
-      <section className="py-16">
+      <section className="py-16 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold mb-6">About Srigandha Kannada Koota</h2>
           <p className="text-lg text-gray-700 max-w-3xl mx-auto mb-8">
@@ -495,7 +327,6 @@ const Home = () => {
           </div>
         ) : (
           <>
-            {/* Always show carousel at the top */}
             <section className="w-full">
               <Carousel images={getCarouselImages()} autoPlayInterval={5000} />
             </section>
@@ -504,6 +335,8 @@ const Home = () => {
               <>
                 <PageRenderer sections={pageData.sections} />
                 {renderPresidentMessage()}
+                {renderUpcomingEvents()}
+                <MembershipPlans />
                 {renderSponsors()}
               </>
             ) : (

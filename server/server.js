@@ -9,18 +9,13 @@ import { fileURLToPath } from 'url';
 import fs from 'fs';
 import { sendErrorAlert, sendServerRestartAlert, sendCriticalAlert } from './utils/errorMonitor.js';
 
-import authRoutes from './routes/auth.js';
 import pageRoutes from './routes/pages.js';
 import eventRoutes from './routes/events.js';
 import committeeRoutes from './routes/committee.js';
 import galleryRoutes from './routes/gallery.js';
 import contactRoutes from './routes/contact.js';
 import settingsRoutes from './routes/settings.js';
-import uploadRoutes from './routes/upload.js';
 import carouselRoutes from './routes/carousel.js';
-import bookingRoutes from './routes/bookings.js';
-import memberRoutes from './routes/members.js';
-import memberAuthRoutes from './routes/memberAuth.js';
 
 dotenv.config();
 
@@ -34,15 +29,13 @@ connectDB();
 // Gzip/Brotli compression for all responses
 app.use(compression());
 
-// CORS - support multiple origins for production
+// CORS
 const allowedOrigins = [
   process.env.CLIENT_URL || 'http://localhost:5173',
-  process.env.ADMIN_URL,
 ].filter(Boolean);
 
 app.use(cors({
   origin: (origin, callback) => {
-    // Allow requests with no origin (mobile apps, curl, etc.)
     if (!origin) return callback(null, true);
     if (allowedOrigins.some(allowed => origin === allowed || origin.endsWith(allowed.replace(/^https?:\/\//, '')))) {
       return callback(null, true);
@@ -54,19 +47,13 @@ app.use(cors({
 
 // Rate limiting
 const apiLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
+  windowMs: 15 * 60 * 1000,
   max: 100,
   message: { message: 'Too many requests, please try again later.' }
 });
 
-const authLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 10,
-  message: { message: 'Too many login attempts, please try again later.' }
-});
-
 const contactLimiter = rateLimit({
-  windowMs: 60 * 60 * 1000, // 1 hour
+  windowMs: 60 * 60 * 1000,
   max: 5,
   message: { message: 'Too many messages sent, please try again later.' }
 });
@@ -94,24 +81,16 @@ app.get('/api/health', (req, res) => {
 });
 
 // API routes with rate limiting
-app.use('/api/auth/login', authLimiter);
-app.use('/api/auth/forgot-password', authLimiter);
-app.use('/api/member-auth/google', authLimiter);
 app.use('/api/contact', contactLimiter);
 app.use('/api', apiLimiter);
 
-app.use('/api/auth', authRoutes);
 app.use('/api/pages', pageRoutes);
 app.use('/api/events', eventRoutes);
 app.use('/api/committee', committeeRoutes);
 app.use('/api/gallery', galleryRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/settings', settingsRoutes);
-app.use('/api/upload', uploadRoutes);
 app.use('/api/carousel', carouselRoutes);
-app.use('/api/bookings', bookingRoutes);
-app.use('/api/members', memberRoutes);
-app.use('/api/member-auth', memberAuthRoutes);
 
 app.get('/api', (req, res) => {
   res.json({ message: 'API is running', version: '1.0.0' });
@@ -125,7 +104,6 @@ if (fs.existsSync(clientBuildPath)) {
     etag: true
   }));
 
-  // SPA fallback - serve index.html for all non-API routes
   app.get('*', (req, res) => {
     if (!req.path.startsWith('/api') && !req.path.startsWith('/uploads')) {
       res.sendFile(path.join(clientBuildPath, 'index.html'));
@@ -145,7 +123,6 @@ app.use((err, req, res, next) => {
     sendErrorAlert(err, {
       endpoint: req.originalUrl,
       method: req.method,
-      userId: req.user?.id
     }).catch(console.error);
   }
 

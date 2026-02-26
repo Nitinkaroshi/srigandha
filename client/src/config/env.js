@@ -14,9 +14,6 @@ const config = {
     return apiUrl.endsWith('/api') ? apiUrl.slice(0, -4) : apiUrl;
   })(),
 
-  // Google OAuth Client ID
-  googleClientId: import.meta.env.VITE_GOOGLE_CLIENT_ID || '',
-
   // Helper function to get full URL for uploaded images
   getImageUrl: (filename) => {
     if (!filename) return '';

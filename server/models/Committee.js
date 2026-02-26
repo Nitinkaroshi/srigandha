@@ -20,7 +20,7 @@ const committeeSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ['current', 'previous'],
+    enum: ['current', 'executive', 'previous'],
     default: 'current'
   },
   order: {

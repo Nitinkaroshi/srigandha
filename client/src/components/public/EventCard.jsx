@@ -1,194 +1,106 @@
-import { useState, useEffect } from 'react';
-import { toast } from 'sonner';
-import { bookingsAPI } from '../../utils/api';
-import { useMemberAuth } from '../../context/MemberAuthContext';
 import config from '../../config/env';
 
 const EventCard = ({ event }) => {
-  const [showRsvp, setShowRsvp] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const { member, isMemberAuthenticated, isActiveMember } = useMemberAuth();
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    tickets: 1,
-    notes: ''
-  });
+  const eventDate = new Date(event.date);
 
-  // Auto-fill form when member is logged in
-  useEffect(() => {
-    if (isMemberAuthenticated && member) {
-      setFormData((prev) => ({
-        ...prev,
-        name: member.name || prev.name,
-        email: member.email || prev.email,
-        phone: member.phone || prev.phone,
-      }));
-    }
-  }, [isMemberAuthenticated, member]);
-
-  const formatDate = (date) => {
-    return new Date(date).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-  };
-
-  const getDisplayPrice = () => {
-    if (!event.price && event.price !== 0) return null;
-    if (event.price === 0) return 'Free';
-    if (isActiveMember && event.memberPrice != null && event.memberPrice < event.price) {
-      return { regular: event.price, member: event.memberPrice };
-    }
-    return { regular: event.price };
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setSubmitting(true);
-
-    try {
-      const payload = { eventId: event._id, ...formData };
-      if (isMemberAuthenticated && member?._id) {
-        payload.memberId = member._id;
-      }
-      await bookingsAPI.create(payload);
-      toast.success('Registration successful! We will confirm your booking soon.');
-      setSubmitted(true);
-      setShowRsvp(false);
-    } catch (error) {
-      toast.error(error.response?.data?.message || 'Registration failed. Please try again.');
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
-  const priceInfo = getDisplayPrice();
+  const month = eventDate.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
+  const day = eventDate.getDate();
+  const year = eventDate.getFullYear();
+  const time = eventDate.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
-      {event.image && (
-        <img
-          src={`${config.baseUrl}${event.image}`}
-          alt={event.title}
-          className="w-full h-48 object-cover"
-        />
-      )}
-      <div className="p-6">
-        <div className="flex items-center justify-between mb-2">
-          <div className="text-sm text-primary font-semibold">
-            {formatDate(event.date)}
+    <div className="group bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-2xl transition-all duration-400 hover:-translate-y-1">
+      {/* Image Section */}
+      <div className="relative h-52 overflow-hidden">
+        {event.image ? (
+          <img
+            src={`${config.baseUrl}${event.image}`}
+            alt={event.title}
+            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+          />
+        ) : (
+          <div className="w-full h-full bg-gradient-to-br from-primary via-secondary to-accent flex items-center justify-center">
+            <svg className="w-16 h-16 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
           </div>
-          {priceInfo && priceInfo !== 'Free' && typeof priceInfo === 'object' && (
-            <div className="text-right">
-              {priceInfo.member != null ? (
-                <div className="flex items-center gap-2">
-                  <span className="text-gray-400 line-through text-sm">${priceInfo.regular}</span>
-                  <span className="text-green-600 font-bold">${priceInfo.member}</span>
-                  <span className="text-xs bg-green-100 text-green-700 px-1.5 py-0.5 rounded">Member</span>
-                </div>
-              ) : (
-                <span className="font-semibold text-gray-800">${priceInfo.regular}</span>
-              )}
-            </div>
-          )}
-          {priceInfo === 'Free' && (
-            <span className="text-green-600 font-semibold text-sm">Free</span>
-          )}
+        )}
+
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+
+        {/* Date badge */}
+        <div className="absolute top-4 left-4 bg-white rounded-xl shadow-lg text-center overflow-hidden min-w-[60px]">
+          <div className="bg-primary text-white text-xs font-bold px-3 py-1 tracking-wider">
+            {month}
+          </div>
+          <div className="px-3 py-1">
+            <span className="text-2xl font-extrabold text-gray-800 leading-none">{day}</span>
+          </div>
         </div>
-        <h3 className="text-xl font-bold mb-2 text-gray-800">{event.title}</h3>
-        <p className="text-gray-600 mb-4 line-clamp-3">{event.description}</p>
 
-        <div className="flex flex-wrap gap-2">
-          {event.registrationLink && (
-            <a
-              href={event.registrationLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block bg-primary text-white px-6 py-2 rounded-md hover:bg-opacity-90 transition text-sm"
-            >
-              Register & Pay
-            </a>
-          )}
-
-          {event.type === 'upcoming' && !submitted && (
-            <button
-              onClick={() => setShowRsvp(!showRsvp)}
-              className="inline-block bg-secondary text-white px-6 py-2 rounded-md hover:bg-opacity-90 transition text-sm"
-            >
-              {showRsvp ? 'Cancel' : 'RSVP Free'}
-            </button>
-          )}
-
-          {submitted && (
-            <span className="inline-block bg-green-100 text-green-800 px-4 py-2 rounded-md text-sm font-medium">
-              Registered
+        {/* Price badge */}
+        <div className="absolute top-4 right-4">
+          {event.price > 0 ? (
+            <span className="bg-gray-900/80 backdrop-blur-sm text-white text-sm font-bold px-3 py-1.5 rounded-full">
+              ${event.price}
+            </span>
+          ) : (
+            <span className="bg-green-500/90 backdrop-blur-sm text-white text-sm font-bold px-3 py-1.5 rounded-full">
+              Free
             </span>
           )}
         </div>
+      </div>
 
-        {showRsvp && (
-          <form onSubmit={handleSubmit} className="mt-4 space-y-3 border-t pt-4">
-            {isMemberAuthenticated && (
-              <div className="bg-blue-50 text-blue-700 text-xs px-3 py-2 rounded-md">
-                Signed in as {member?.name || member?.email} - form auto-filled
-              </div>
-            )}
-            <input
-              type="text"
-              required
-              placeholder="Full Name"
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-primary focus:border-transparent"
-            />
-            <input
-              type="email"
-              required
-              placeholder="Email"
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-primary focus:border-transparent"
-            />
-            <input
-              type="tel"
-              required
-              placeholder="Phone Number"
-              value={formData.phone}
-              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-primary focus:border-transparent"
-            />
-            <div className="flex gap-3">
-              <div className="flex-1">
-                <select
-                  value={formData.tickets}
-                  onChange={(e) => setFormData({ ...formData, tickets: parseInt(e.target.value) })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-primary"
-                >
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => (
-                    <option key={n} value={n}>{n} {n === 1 ? 'person' : 'people'}</option>
-                  ))}
-                </select>
-              </div>
-            </div>
-            <textarea
-              placeholder="Any notes (optional)"
-              value={formData.notes}
-              onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-              rows="2"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-primary focus:border-transparent"
-            />
-            <button
-              type="submit"
-              disabled={submitting}
-              className="w-full bg-primary text-white py-2 rounded-md hover:bg-opacity-90 transition text-sm disabled:opacity-50"
-            >
-              {submitting ? 'Submitting...' : 'Confirm RSVP'}
-            </button>
-          </form>
+      {/* Content Section */}
+      <div className="p-5">
+        {/* Time */}
+        <div className="flex items-center gap-1.5 text-gray-500 text-sm mb-2">
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span>{time} &middot; {year}</span>
+        </div>
+
+        {/* Title */}
+        <h3 className="text-lg font-bold text-gray-800 mb-2 group-hover:text-primary transition-colors duration-300 line-clamp-2">
+          {event.title}
+        </h3>
+
+        {/* Description */}
+        <p className="text-gray-500 text-sm leading-relaxed mb-4 line-clamp-2">
+          {event.description}
+        </p>
+
+        {/* Venue */}
+        {event.venue && (
+          <div className="flex items-center gap-1.5 text-gray-500 text-sm mb-4">
+            <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span className="line-clamp-1">{event.venue}</span>
+          </div>
+        )}
+
+        {/* Register Button */}
+        {event.registrationLink ? (
+          <a
+            href={event.registrationLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block w-full text-center bg-gradient-to-r from-primary to-secondary text-white font-semibold px-6 py-2.5 rounded-lg hover:shadow-lg hover:shadow-primary/25 transition-all duration-300 text-sm"
+          >
+            Register Now
+            <svg className="inline-block w-4 h-4 ml-1.5 -mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </a>
+        ) : (
+          <div className="block w-full text-center bg-gray-100 text-gray-600 font-semibold px-6 py-2.5 rounded-lg text-sm">
+            Details Coming Soon
+          </div>
         )}
       </div>
     </div>

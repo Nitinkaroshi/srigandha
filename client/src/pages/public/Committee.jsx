@@ -6,10 +6,32 @@ import WhatsAppButton from '../../components/public/WhatsAppButton';
 import { committeeAPI } from '../../utils/api';
 import config from '../../config/env';
 
+const tabs = [
+  { key: 'current', label: 'Board of Trustees' },
+  { key: 'executive', label: 'Executive Committee' },
+  { key: 'previous', label: 'Past Committee' },
+];
+
+const MemberCard = ({ member }) => (
+  <div className="flex flex-col items-center p-4">
+    {member.photo ? (
+      <img
+        src={`${config.baseUrl}${member.photo}`}
+        alt={member.name}
+        className="w-24 h-24 rounded-full object-cover shadow-md"
+      />
+    ) : (
+      <div className="w-24 h-24 bg-gradient-to-br from-[#fecc01] to-[#ffa726] rounded-full flex items-center justify-center shadow-md">
+        <span className="text-4xl text-white">&#128100;</span>
+      </div>
+    )}
+    <h3 className="mt-3 text-sm font-semibold text-gray-800 text-center">{member.name}</h3>
+  </div>
+);
+
 const Committee = () => {
   const [activeTab, setActiveTab] = useState('current');
-  const [currentMembers, setCurrentMembers] = useState([]);
-  const [previousMembers, setPreviousMembers] = useState([]);
+  const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -19,14 +41,7 @@ const Committee = () => {
   const fetchCommitteeMembers = async () => {
     try {
       const response = await committeeAPI.getAll();
-      const allMembers = response.data;
-
-      // Separate current and previous members
-      const current = allMembers.filter(m => m.type === 'current').sort((a, b) => a.order - b.order);
-      const previous = allMembers.filter(m => m.type === 'previous').sort((a, b) => a.order - b.order);
-
-      setCurrentMembers(current);
-      setPreviousMembers(previous);
+      setMembers(response.data);
     } catch (error) {
       console.error('Error fetching committee members:', error);
     } finally {
@@ -34,18 +49,66 @@ const Committee = () => {
     }
   };
 
-  // Group previous members by term
-  const groupedPreviousMembers = previousMembers.reduce((acc, member) => {
-    const term = member.term;
-    if (!acc[term]) {
-      acc[term] = [];
-    }
-    acc[term].push(member);
-    return acc;
-  }, {});
+  const getFilteredMembers = () => {
+    return members
+      .filter(m => m.type === activeTab)
+      .sort((a, b) => a.order - b.order);
+  };
 
-  // Sort terms in descending order
-  const sortedTerms = Object.keys(groupedPreviousMembers).sort((a, b) => b.localeCompare(a));
+  // Group previous members by term
+  const getPreviousGrouped = () => {
+    const previous = members.filter(m => m.type === 'previous').sort((a, b) => a.order - b.order);
+    const grouped = previous.reduce((acc, member) => {
+      const term = member.term || 'Unknown';
+      if (!acc[term]) acc[term] = [];
+      acc[term].push(member);
+      return acc;
+    }, {});
+    const sortedTerms = Object.keys(grouped).sort((a, b) => b.localeCompare(a));
+    return { grouped, sortedTerms };
+  };
+
+  const renderMembers = () => {
+    if (loading) {
+      return <div className="text-center text-xl py-12">Loading committee members...</div>;
+    }
+
+    if (activeTab === 'previous') {
+      const { grouped, sortedTerms } = getPreviousGrouped();
+      if (sortedTerms.length === 0) {
+        return <p className="text-center text-gray-600 text-xl py-12">No past committee members available.</p>;
+      }
+      return (
+        <div className="space-y-10">
+          {sortedTerms.map((term) => (
+            <div key={term} className="bg-white rounded-lg shadow-md p-6">
+              <h3 className="text-xl font-bold text-center mb-6 text-primary border-b-2 border-primary pb-3">
+                Committee {term}
+              </h3>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 justify-items-center">
+                {grouped[term].map((member) => (
+                  <MemberCard key={member._id} member={member} />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    const filtered = getFilteredMembers();
+    if (filtered.length === 0) {
+      return <p className="text-center text-gray-600 text-xl py-12">No committee members available.</p>;
+    }
+
+    return (
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 justify-items-center">
+        {filtered.map((member) => (
+          <MemberCard key={member._id} member={member} />
+        ))}
+      </div>
+    );
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -53,113 +116,31 @@ const Committee = () => {
 
       <Hero title="Committee" subtitle="Meet our dedicated team" />
 
-      <main className="flex-grow py-16">
+      <main className="flex-grow py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Tab Navigation */}
           <div className="flex justify-center flex-wrap gap-4 mb-12">
-            <button
-              onClick={() => setActiveTab('current')}
-              className={`px-6 py-3 rounded-md font-semibold transition ${activeTab === 'current'
-                  ? 'bg-[#fecc01] text-gray-900'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+            {tabs.map((tab) => (
+              <button
+                key={tab.key}
+                onClick={() => setActiveTab(tab.key)}
+                className={`px-6 py-3 rounded-md font-semibold transition ${
+                  activeTab === tab.key
+                    ? 'bg-primary text-gray-900 shadow-md'
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                 }`}
-            >
-              Board of Trustees
-            </button>
-            <button
-              onClick={() => setActiveTab('previous')}
-              className={`px-6 py-3 rounded-md font-semibold transition ${activeTab === 'previous'
-                  ? 'bg-[#fecc01] text-gray-900'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                }`}
-            >
-              Previous Committees
-            </button>
+              >
+                {tab.label}
+              </button>
+            ))}
           </div>
 
-          {/* Current Committee - Board of Trustees */}
-          {activeTab === 'current' && (
-            <div>
-              {loading ? (
-                <div className="text-center text-xl">Loading committee members...</div>
-              ) : currentMembers.length > 0 ? (
-                <>
-                  <h2 className="text-3xl font-bold text-center mb-8">Board of Trustees</h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-                    {currentMembers.map((member) => (
-                      <div key={member._id} className="bg-white rounded-lg shadow-md p-6 text-center hover:shadow-xl transition-shadow">
-                        {member.photo ? (
-                          <img
-                            src={`${config.baseUrl}${member.photo}`}
-                            alt={member.name}
-                            className="w-32 h-32 mx-auto mb-4 rounded-full object-cover"
-                          />
-                        ) : (
-                          <div className="w-32 h-32 mx-auto mb-4 bg-gradient-to-br from-[#fecc01] to-[#ffa726] rounded-full flex items-center justify-center">
-                            <span className="text-5xl text-white">👤</span>
-                          </div>
-                        )}
-                        <h3 className="text-lg font-bold mb-2 text-gray-800">{member.name}</h3>
-                        <p className="text-sm text-gray-600">{member.role}</p>
-                        {member.email && (
-                          <p className="text-xs text-gray-500 mt-2">{member.email}</p>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-8 text-center text-gray-600">
-                    <p className="text-sm">Tax ID: 59-3527606</p>
-                  </div>
-                </>
-              ) : (
-                <div className="text-center text-gray-600">
-                  <p className="text-xl">No current committee members available.</p>
-                </div>
-              )}
-            </div>
-          )}
+          {/* Members Grid */}
+          {renderMembers()}
 
-          {/* Previous Committees */}
-          {activeTab === 'previous' && (
-            <div className="space-y-12">
-              {loading ? (
-                <div className="text-center text-xl">Loading previous committees...</div>
-              ) : sortedTerms.length > 0 ? (
-                <>
-                  {sortedTerms.map((term, idx) => (
-                    <div key={idx} className="bg-white rounded-lg shadow-md p-8">
-                      <h2 className="text-2xl font-bold text-center mb-6 text-[#fecc01] border-b-2 border-[#fecc01] pb-3">
-                        Committee {term}
-                      </h2>
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {groupedPreviousMembers[term].map((member) => (
-                          <div key={member._id} className="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
-                            {member.photo ? (
-                              <img
-                                src={`${config.baseUrl}${member.photo}`}
-                                alt={member.name}
-                                className="w-12 h-12 rounded-full object-cover flex-shrink-0"
-                              />
-                            ) : (
-                              <div className="w-12 h-12 bg-gradient-to-br from-[#fecc01] to-[#ffa726] rounded-full flex items-center justify-center flex-shrink-0">
-                                <span className="text-2xl text-white">👤</span>
-                              </div>
-                            )}
-                            <div className="ml-4">
-                              <h3 className="font-bold text-gray-800">{member.name}</h3>
-                              <p className="text-sm text-gray-600">{member.role}</p>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </>
-              ) : (
-                <div className="text-center text-gray-600">
-                  <p className="text-xl">No previous committee members available.</p>
-                </div>
-              )}
+          {activeTab === 'current' && (
+            <div className="mt-8 text-center text-gray-600">
+              <p className="text-sm">Tax ID: 59-3527606</p>
             </div>
           )}
         </div>
