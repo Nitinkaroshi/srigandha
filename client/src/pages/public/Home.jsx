@@ -327,8 +327,25 @@ const Home = () => {
           </div>
         ) : (
           <>
-            <section className="w-full">
+            <section className="w-full relative">
               <Carousel images={getCarouselImages()} autoPlayInterval={5000} />
+            </section>
+
+            {/* Membership CTA Strip */}
+            <section className="bg-gradient-to-r from-green-700 via-green-600 to-green-700 py-4">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6">
+                <p className="text-white text-lg font-semibold text-center">
+                  Join the Srigandha family — become a member today!
+                </p>
+                <a
+                  href="https://www.mygumpu.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-white text-green-700 font-bold px-6 py-2 rounded-full hover:bg-yellow-400 hover:text-gray-900 transition-all duration-300 shadow-md hover:shadow-lg text-sm whitespace-nowrap"
+                >
+                  Register for Membership
+                </a>
+              </div>
             </section>
 
             {pageData && pageData.isPublished && pageData.sections && pageData.sections.length > 0 ? (
