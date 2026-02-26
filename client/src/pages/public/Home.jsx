@@ -10,6 +10,10 @@ import config from '../../config/env';
 import image1 from '../../assets/SKK_Sports_Event_2025.png';
 import image2 from '../../assets/Srigandha_Kannada_shaale_registration_Web_banner_2.jpg';
 import image3 from '../../assets/Srigandha_Teachers_Appreciation_Award.jpeg';
+import image4 from '../../assets/srigandha-dance-1.jpeg';
+import image5 from '../../assets/srigandha-dance-2.jpeg';
+import image6 from '../../assets/srigandha-dance-3.jpeg';
+import image7 from '../../assets/srigandha-dance-4.jpeg';
 
 const MembershipPlans = () => {
   const plans = [
@@ -89,7 +93,11 @@ const Home = () => {
   const defaultCarouselImages = [
     { src: image1, alt: 'SKK Sports Event 2025', caption: 'Join us for the SKK Sports Event 2025!' },
     { src: image2, alt: 'Kannada Shaale Registration', caption: 'Register now for Kannada Shaale' },
-    { src: image3, alt: 'Teachers Appreciation Award', caption: 'Celebrating our dedicated teachers' }
+    { src: image3, alt: 'Teachers Appreciation Award', caption: 'Celebrating our dedicated teachers' },
+    { src: image4, alt: 'Srigandha Cultural Dance', caption: 'Celebrating our vibrant cultural heritage' },
+    { src: image5, alt: 'Srigandha Dance Performance', caption: 'Showcasing the beauty of Karnataka traditions' },
+    { src: image6, alt: 'Srigandha Community Event', caption: 'Together we celebrate, together we grow' },
+    { src: image7, alt: 'Srigandha Festival Celebration', caption: 'Keeping the spirit of Karnataka alive in Florida' },
   ];
 
   useEffect(() => {
