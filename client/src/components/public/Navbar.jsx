@@ -25,26 +25,26 @@ const Navbar = () => {
   return (
     <nav className="sticky top-0 z-50 bg-white shadow-lg">
       {/* Top Decorative Border */}
-      <div className="w-full h-4 bg-repeat-x" style={{ backgroundImage: `url(${headerTopBorder})` }}></div>
+      <div className="w-full h-2 bg-repeat-x" style={{ backgroundImage: `url(${headerTopBorder})`, backgroundSize: 'auto 100%' }}></div>
 
       {/* Main Header Section */}
       <div className="bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-400">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between py-3">
+          <div className="flex items-center justify-between py-1.5">
             {/* Logo and Title Section */}
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-3">
               <Link to="/" className="flex-shrink-0">
                 <img
                   src={logo}
                   alt="Srigandha Logo"
-                  className="h-20 w-20 md:h-24 md:w-24"
+                  className="h-14 w-14 md:h-18 md:w-18"
                 />
               </Link>
               <div className="hidden md:block">
-                <h1 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-800" style={{ fontFamily: "'Noto Sans Kannada', serif" }}>
+                <h1 className="text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-800 leading-tight" style={{ fontFamily: "'Noto Sans Kannada', serif" }}>
                   ಶ್ರೀಗಂಧ ಕನ್ನಡ ಕೂಟ ಫ್ಲೋರಿಡಾ
                 </h1>
-                <h2 className="text-lg lg:text-2xl font-semibold text-green-800">
+                <h2 className="text-base lg:text-xl font-semibold text-green-800">
                   Srigandha Kannada Koota of Florida
                 </h2>
               </div>
@@ -55,7 +55,7 @@ const Navbar = () => {
               <img
                 src={karnatakaMap}
                 alt="Karnataka"
-                className="h-24 w-auto"
+                className="h-18 w-auto"
               />
             </div>
 
@@ -75,8 +75,8 @@ const Navbar = () => {
           </div>
 
           {/* Mobile Title - Below Logo */}
-          <div className="md:hidden pb-3">
-            <h1 className="text-xl font-bold text-gray-800" style={{ fontFamily: "'Noto Sans Kannada', serif" }}>
+          <div className="md:hidden pb-1.5">
+            <h1 className="text-lg font-bold text-gray-800" style={{ fontFamily: "'Noto Sans Kannada', serif" }}>
               ಶ್ರೀಗಂಧ ಕನ್ನಡ ಕೂಟ ಫ್ಲೋರಿಡಾ
             </h1>
             <h2 className="text-sm font-semibold text-green-700">
@@ -89,21 +89,21 @@ const Navbar = () => {
       {/* Navigation Menu - Desktop */}
       <div className="hidden md:block bg-green-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between py-2 min-h-[3rem]">
+          <div className="flex items-center justify-between py-1">
             <div className="flex space-x-1">
-              <Link to="/" className="px-4 py-2 text-white hover:bg-green-600 transition font-medium">HOME</Link>
-              <Link to="/about" className="px-4 py-2 text-white hover:bg-green-600 transition font-medium">ABOUT US</Link>
-              <Link to="/events" className="px-4 py-2 text-white hover:bg-green-600 transition font-medium">EVENTS</Link>
-              <Link to="/committee" className="px-4 py-2 text-white hover:bg-green-600 transition font-medium">COMMITTEE</Link>
-              <Link to="/gallery" className="px-4 py-2 text-white hover:bg-green-600 transition font-medium">GALLERY</Link>
-              <Link to="/contact" className="px-4 py-2 text-white hover:bg-green-600 transition font-medium">CONTACT US</Link>
-              <a href="https://app.featsclub.com/membership.html?ps7Pa4IiKXQHQlCusbXFUTMLBH03" target="_blank" rel="noopener noreferrer" className="px-4 py-2 text-white hover:bg-green-600 transition font-medium">MEMBERSHIP</a>
+              <Link to="/" className="px-3 py-1.5 text-white hover:bg-green-600 transition font-medium text-sm">HOME</Link>
+              <Link to="/about" className="px-3 py-1.5 text-white hover:bg-green-600 transition font-medium text-sm">ABOUT US</Link>
+              <Link to="/events" className="px-3 py-1.5 text-white hover:bg-green-600 transition font-medium text-sm">EVENTS</Link>
+              <Link to="/committee" className="px-3 py-1.5 text-white hover:bg-green-600 transition font-medium text-sm">COMMITTEE</Link>
+              <Link to="/gallery" className="px-3 py-1.5 text-white hover:bg-green-600 transition font-medium text-sm">GALLERY</Link>
+              <Link to="/contact" className="px-3 py-1.5 text-white hover:bg-green-600 transition font-medium text-sm">CONTACT US</Link>
+              <a href="https://app.featsclub.com/membership.html?ps7Pa4IiKXQHQlCusbXFUTMLBH03" target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 text-white hover:bg-green-600 transition font-medium text-sm">MEMBERSHIP</a>
             </div>
             <a
               href="https://app.featsclub.com/membership.html?ps7Pa4IiKXQHQlCusbXFUTMLBH03"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded font-bold transition"
+              className="bg-red-600 hover:bg-red-700 text-white px-5 py-1.5 rounded font-bold transition text-sm"
             >
               BECOME A MEMBER
             </a>
@@ -136,7 +136,7 @@ const Navbar = () => {
       )}
 
       {/* Bottom Decorative Border */}
-      <div className="w-full h-4 bg-repeat-x" style={{ backgroundImage: `url(${headerBottomBorder})` }}></div>
+      <div className="w-full h-2 bg-repeat-x" style={{ backgroundImage: `url(${headerBottomBorder})`, backgroundSize: 'auto 100%' }}></div>
     </nav>
   );
 };

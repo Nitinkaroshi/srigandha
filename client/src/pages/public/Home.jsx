@@ -19,20 +19,20 @@ const MembershipPlans = () => {
   const plans = [
     {
       name: 'Single',
-      price: 20,
+      price: 30,
       duration: '1 Year Membership',
       benefits: ['Discounted Event Tickets', 'Network With Members', 'Community Updates'],
     },
     {
       name: 'Family',
-      price: 35,
+      price: 50,
       duration: '1 Year Membership',
       popular: true,
       benefits: ['Discounted Event Tickets', 'Network With Members', 'Community Updates', 'Family Coverage'],
     },
     {
-      name: 'Life Time',
-      price: 350,
+      name: 'Life Member',
+      price: 500,
       duration: 'One-Time Payment',
       benefits: ['Discounted Event Tickets', 'Network With Members', 'Community Updates', 'Lifetime Access'],
     },
