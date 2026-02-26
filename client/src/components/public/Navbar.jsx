@@ -97,10 +97,10 @@ const Navbar = () => {
               <Link to="/committee" className="px-4 py-2 text-white hover:bg-green-600 transition font-medium">COMMITTEE</Link>
               <Link to="/gallery" className="px-4 py-2 text-white hover:bg-green-600 transition font-medium">GALLERY</Link>
               <Link to="/contact" className="px-4 py-2 text-white hover:bg-green-600 transition font-medium">CONTACT US</Link>
-              <a href="https://www.mygumpu.com/" target="_blank" rel="noopener noreferrer" className="px-4 py-2 text-white hover:bg-green-600 transition font-medium">MEMBERSHIP</a>
+              <a href="https://app.featsclub.com/membership.html?ps7Pa4IiKXQHQlCusbXFUTMLBH03" target="_blank" rel="noopener noreferrer" className="px-4 py-2 text-white hover:bg-green-600 transition font-medium">MEMBERSHIP</a>
             </div>
             <a
-              href="https://www.mygumpu.com/"
+              href="https://app.featsclub.com/membership.html?ps7Pa4IiKXQHQlCusbXFUTMLBH03"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded font-bold transition"
@@ -121,9 +121,9 @@ const Navbar = () => {
             <Link to="/committee" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-white hover:bg-green-600 rounded-md font-medium">COMMITTEE</Link>
             <Link to="/gallery" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-white hover:bg-green-600 rounded-md font-medium">GALLERY</Link>
             <Link to="/contact" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-white hover:bg-green-600 rounded-md font-medium">CONTACT US</Link>
-            <a href="https://www.mygumpu.com/" target="_blank" rel="noopener noreferrer" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-white hover:bg-green-600 rounded-md font-medium">MEMBERSHIP</a>
+            <a href="https://app.featsclub.com/membership.html?ps7Pa4IiKXQHQlCusbXFUTMLBH03" target="_blank" rel="noopener noreferrer" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-white hover:bg-green-600 rounded-md font-medium">MEMBERSHIP</a>
             <a
-              href="https://www.mygumpu.com/"
+              href="https://app.featsclub.com/membership.html?ps7Pa4IiKXQHQlCusbXFUTMLBH03"
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setIsOpen(false)}

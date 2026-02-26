@@ -64,7 +64,7 @@ const MembershipPlans = () => {
                 ))}
               </ul>
               <a
-                href="https://www.mygumpu.com/"
+                href="https://app.featsclub.com/membership.html?ps7Pa4IiKXQHQlCusbXFUTMLBH03"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block bg-secondary text-white px-8 py-3 rounded-md hover:bg-opacity-90 transition font-semibold w-full"
@@ -338,7 +338,7 @@ const Home = () => {
                   Join the Srigandha family — become a member today!
                 </p>
                 <a
-                  href="https://www.mygumpu.com/"
+                  href="https://app.featsclub.com/membership.html?ps7Pa4IiKXQHQlCusbXFUTMLBH03"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-white text-green-700 font-bold px-6 py-2 rounded-full hover:bg-yellow-400 hover:text-gray-900 transition-all duration-300 shadow-md hover:shadow-lg text-sm whitespace-nowrap"
