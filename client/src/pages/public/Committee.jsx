@@ -26,6 +26,9 @@ const MemberCard = ({ member }) => (
       </div>
     )}
     <h3 className="mt-3 text-sm font-semibold text-gray-800 text-center">{member.name}</h3>
+    {member.role && member.type === 'previous' && (
+      <p className="text-xs text-gray-500 text-center">{member.role}</p>
+    )}
   </div>
 );
 
@@ -116,7 +119,7 @@ const Committee = () => {
 
       <Hero title="Committee" subtitle="Meet our dedicated team" />
 
-      <main className="flex-grow py-16 bg-gray-50">
+      <main className="flex-grow pt-8 pb-12 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Tab Navigation */}
           <div className="flex justify-center flex-wrap gap-4 mb-12">

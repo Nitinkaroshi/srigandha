@@ -18,50 +18,40 @@ const __dirname = path.dirname(__filename);
 // Committee data from original website
 const boardOfTrustees = [
   {
-    name: 'Padmanabha Bedarahally',
+    name: 'Prakash Doddamane',
     role: 'Board of Trustees Member',
     type: 'current',
     term: 'Board of Trustees',
     order: 1,
-    imageUrl: 'http://srigandhafl.org/sites/default/files/Padmanabha_Bedarahalli.jpg'
   },
   {
-    name: 'Nithyanandaswamy Kora',
+    name: 'Govindagoudar Ranganagoudar',
     role: 'Board of Trustees Member',
     type: 'current',
     term: 'Board of Trustees',
     order: 2,
-    imageUrl: 'http://srigandhafl.org/sites/default/files/NIthya_kora.jpg'
   },
   {
-    name: 'Vijay Prakash',
+    name: 'Harshith Gowda',
     role: 'Board of Trustees Member',
     type: 'current',
     term: 'Board of Trustees',
     order: 3,
-    imageUrl: 'http://srigandhafl.org/sites/default/files/Vijay_Prakash_1.jpg'
-  },
-  {
-    name: 'Venu Kulakarni',
-    role: 'Board of Trustees Member',
-    type: 'current',
-    term: 'Board of Trustees',
-    order: 4,
-    imageUrl: 'https://www.srigandhafl.org/sites/default/files/venu_kulkarni.jpg'
-  },
-  {
-    name: 'Gangadhar Ganga',
-    role: 'Board of Trustees Member',
-    type: 'current',
-    term: 'Board of Trustees',
-    order: 5,
-    imageUrl: 'https://srigandhafl.org/sites/default/files/Gangadhar_Ganga_Final.jpg'
+    imageUrl: '/uploads/committee_harshith_gowda.jpg'
   }
 ];
 
 const previousCommittee = [
+  // 2024-2025
+  { name: 'Govindagoudar Ranganagoudar', role: 'President', type: 'previous', term: '2024-2025', order: 1 },
+  { name: 'Harshith Gowda', role: 'Vice President', type: 'previous', term: '2024-2025', order: 2 },
+  { name: 'Raghu Maiya', role: 'Secretary', type: 'previous', term: '2024-2025', order: 3 },
+  { name: 'Manasa Raghavendra', role: 'Joint Secretary', type: 'previous', term: '2024-2025', order: 4 },
+  { name: 'Dinesh Manjunath', role: 'Treasurer', type: 'previous', term: '2024-2025', order: 5 },
+  { name: 'Harish Rao', role: 'Joint Treasurer', type: 'previous', term: '2024-2025', order: 6 },
+
   // 2022-2023
-  { name: 'Gangadhar Ganga', role: 'President', type: 'previous', term: '2022-2023', order: 1 },
+  { name: 'Gangadhar Ganga', role: 'President', type: 'previous', term: '2022-2023', order: 7 },
   { name: 'Govindagouda Ranganagoudar', role: 'Vice President', type: 'previous', term: '2022-2023', order: 2 },
   { name: 'Harshith Gowda', role: 'Secretary', type: 'previous', term: '2022-2023', order: 3 },
   { name: 'Akshatha Bhat', role: 'Joint Secretary', type: 'previous', term: '2022-2023', order: 4 },
@@ -172,9 +162,9 @@ const siteSettingsData = {
   membershipPortalUrl: 'https://app.featsclub.com/membership.html?ps7Pa4IiKXQHQlCusbXFUTMLBH03',
   whatsappLink: 'https://chat.whatsapp.com/LQLgj1aOn6Q56AlnFS0efT',
   contactInfo: {
-    email: 'srigandha@yahoo.com',
-    phone: '(813) 508-0146',
-    address: 'Srigandha Kannada Koota,\n11605 Quiet Forest DR,\nTampa, FL 33635'
+    email: 'communication@srigandhafl.org',
+    phone: '2036067328',
+    address: '8826 Tropical Palm Drive,\nTampa Florida 33626'
   }
 };
 

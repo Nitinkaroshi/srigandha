@@ -33,7 +33,7 @@ const Events = () => {
 
       <Hero title="Events" subtitle="Join us in celebrating our culture" />
 
-      <main className="flex-grow py-16">
+      <main className="flex-grow pt-8 pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-center flex-wrap gap-4 mb-12">
             <button

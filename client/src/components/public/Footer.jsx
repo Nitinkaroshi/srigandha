@@ -82,10 +82,8 @@ const Footer = () => {
             )}
           </div>
         </div>
-<div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+<div className="border-t border-gray-800 mt-8 pt-6 text-center text-gray-400 space-y-2">
           <p style={{ fontFamily: "'Noto Sans Kannada', serif" }}>ಸಿರಿಗನ್ನಡಂ ಗೆಲ್ಗೆ, ಸಿರಿಗನ್ನಡಂ ಬಾಳ್ಗೆ</p>
-        </div>
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
           <p>&copy; {new Date().getFullYear()} {settings?.siteName || 'Srigandha Kannada Koota of Florida'}. All rights reserved.</p>
         </div>
       </div>

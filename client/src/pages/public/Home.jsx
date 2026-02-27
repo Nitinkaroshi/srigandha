@@ -7,8 +7,6 @@ import WhatsAppButton from '../../components/public/WhatsAppButton';
 import EventCard from '../../components/public/EventCard';
 import { pagesAPI, settingsAPI, carouselAPI, eventsAPI } from '../../utils/api';
 import config from '../../config/env';
-import image1 from '../../assets/SKK_Sports_Event_2025.png';
-import image2 from '../../assets/Srigandha_Kannada_shaale_registration_Web_banner_2.jpg';
 import image3 from '../../assets/Srigandha_Teachers_Appreciation_Award.jpeg';
 import image4 from '../../assets/srigandha-dance-1.jpeg';
 import image5 from '../../assets/srigandha-dance-2.jpeg';
@@ -39,7 +37,7 @@ const MembershipPlans = () => {
   ];
 
   return (
-    <section className="py-16 bg-gradient-to-b from-gray-100 to-gray-200">
+    <section className="py-12 bg-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-gray-800">Become a Member Today</h2>
         <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
@@ -91,8 +89,6 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
 
   const defaultCarouselImages = [
-    { src: image1, alt: 'SKK Sports Event 2025', caption: 'Join us for the SKK Sports Event 2025!' },
-    { src: image2, alt: 'Kannada Shaale Registration', caption: 'Register now for Kannada Shaale' },
     { src: image3, alt: 'Teachers Appreciation Award', caption: 'Celebrating our dedicated teachers' },
     { src: image4, alt: 'Srigandha Cultural Dance', caption: 'Celebrating our vibrant cultural heritage' },
     { src: image5, alt: 'Srigandha Dance Performance', caption: 'Showcasing the beauty of Karnataka traditions' },
@@ -146,7 +142,7 @@ const Home = () => {
     if (!pm || !pm.message) return null;
 
     return (
-      <section className="py-16 bg-gray-100">
+      <section className="py-12 bg-gray-100">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-800">
             {pm.title || "President"}'s Message
@@ -193,7 +189,7 @@ const Home = () => {
     if (!activeSponsors || activeSponsors.length === 0) return null;
 
     return (
-      <section className="py-16 bg-gray-50">
+      <section className="py-12 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-gray-800">
             Our Sponsors & Partners
@@ -234,7 +230,7 @@ const Home = () => {
     if (!upcomingEvents || upcomingEvents.length === 0) return null;
 
     return (
-      <section className="py-16 bg-gray-50">
+      <section className="py-12 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-gray-800">
             Register for Upcoming Events
@@ -305,7 +301,7 @@ const Home = () => {
       {/* Sponsors */}
       {renderSponsors()}
 
-      <section className="py-16 bg-gray-100">
+      <section className="py-12 bg-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold mb-6">About Srigandha Kannada Koota</h2>
           <p className="text-lg text-gray-700 max-w-3xl mx-auto mb-8">
@@ -328,7 +324,7 @@ const Home = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
 
-      <main className="flex-grow bg-gray-50">
+      <main className="flex-grow">
         {loading ? (
           <div className="flex items-center justify-center py-16">
             <div className="text-xl">Loading...</div>
@@ -339,34 +335,46 @@ const Home = () => {
               <Carousel images={getCarouselImages()} autoPlayInterval={5000} />
             </section>
 
-            {/* Membership CTA Strip */}
-            <section className="bg-gradient-to-r from-green-700 via-green-600 to-green-700 py-4">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6">
-                <p className="text-white text-lg font-semibold text-center">
+            {/* Membership & Donate CTA Strip */}
+            <section className="bg-gradient-to-r from-green-800 via-green-700 to-green-800 py-8 md:py-10">
+              <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <p className="text-white text-xl md:text-2xl font-bold text-center mb-6">
                   Join the Srigandha family — become a member today!
                 </p>
-                <a
-                  href="https://app.featsclub.com/membership.html?ps7Pa4IiKXQHQlCusbXFUTMLBH03"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-white text-green-700 font-bold px-6 py-2 rounded-full hover:bg-yellow-400 hover:text-gray-900 transition-all duration-300 shadow-md hover:shadow-lg text-sm whitespace-nowrap"
-                >
-                  Register for Membership
-                </a>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+                  <a
+                    href="https://app.featsclub.com/membership.html?ps7Pa4IiKXQHQlCusbXFUTMLBH03"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group bg-white rounded-xl p-6 text-center shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
+                  >
+                    <div className="text-green-700 mb-2">
+                      <svg className="w-10 h-10 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                      </svg>
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-800 group-hover:text-green-700 transition-colors">Register for Membership</h3>
+                    <p className="text-gray-500 text-sm mt-1">Join our Kannada community in Florida</p>
+                  </a>
+                  <a
+                    href="https://buy.stripe.com/28EbJ038F29N8GW52683C00"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group bg-yellow-400 rounded-xl p-6 text-center shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
+                  >
+                    <div className="text-gray-900 mb-2">
+                      <svg className="w-10 h-10 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                      </svg>
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-900">Donate Now</h3>
+                    <p className="text-gray-700 text-sm mt-1">Support our cultural initiatives</p>
+                  </a>
+                </div>
               </div>
             </section>
 
-            {pageData && pageData.isPublished && pageData.sections && pageData.sections.length > 0 ? (
-              <>
-                <PageRenderer sections={pageData.sections} />
-                {renderPresidentMessage()}
-                {renderUpcomingEvents()}
-                <MembershipPlans />
-                {renderSponsors()}
-              </>
-            ) : (
-              renderDefaultContent()
-            )}
+            {renderDefaultContent()}
           </>
         )}
       </main>

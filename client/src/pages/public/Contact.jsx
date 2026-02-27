@@ -62,7 +62,7 @@ const Contact = () => {
 
       <Hero title="Contact Us" subtitle="Get in touch with us" />
 
-      <main className="flex-grow py-16">
+      <main className="flex-grow pt-8 pb-12">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <div>

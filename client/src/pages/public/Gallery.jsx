@@ -164,7 +164,7 @@ const Gallery = () => {
 
       <Hero title="Gallery" subtitle="Preserving memories of our cultural celebrations" />
 
-      <main className="flex-grow py-16 bg-gray-50">
+      <main className="flex-grow pt-8 pb-12 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {loading ? (
             <div className="text-center text-xl">Loading galleries...</div>

@@ -33,7 +33,7 @@ const About = () => {
     <>
       <Hero title="About Us" subtitle="Srigandha Kannada Koota of Florida" />
 
-      <main className="flex-grow py-16">
+      <main className="flex-grow pt-8 pb-12">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* Intro with Logo */}
@@ -208,7 +208,7 @@ const About = () => {
               Become a <strong>member of Srigandha Kannada Koota of Florida</strong> and be part of a living legacy that connects generations through language, culture, and community.
             </p>
             <a
-              href="/contact"
+              href="https://app.featsclub.com/membership.html?ps7Pa4IiKXQHQlCusbXFUTMLBH03"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block bg-primary text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-opacity-90 hover:scale-105 transition transform shadow-lg"
